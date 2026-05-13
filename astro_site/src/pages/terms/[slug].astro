@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, CollectionEntry } from 'astro:content';
+
+type Verb = CollectionEntry<'verbs'>;
+
+const { slug } = Astro.params;
+
+const verbs = await getCollection('verbs');
+
+const verb = verbs.find((verb: Verb) => verb.slug === slug);
+
+export async function getStaticPaths() {
+  const verbs = await getCollection('verbs');
+
+  return verbs.map((verb: Verb) => ({
+    params: { slug: verb.slug },
+    props: { verb },
+  }));
+}
+---
+
+<BaseLayout>
+  <div id="primary">
+    <main id="main">
+      <article class="single-pg-container">
+        <h1 class="entry-title">{verb.data.term}</h1>
+      </article>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .location {
+    font-weight: bold;
+  }
+</style>
