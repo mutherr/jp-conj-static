@@ -1,6 +1,7 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 
 type Verb = CollectionEntry<'verbs'>;
 
@@ -8,13 +9,16 @@ const { slug } = Astro.params;
 
 const verbs = await getCollection('verbs');
 
-const verb = verbs.find((verb: Verb) => verb.slug === slug);
+const verb = verbs.find((verb: Verb) => verb.id === slug);
+if (!verb) {
+  throw new Error(`Verb not found for slug: ${slug}`);
+}
 
 export async function getStaticPaths() {
   const verbs = await getCollection('verbs');
 
   return verbs.map((verb: Verb) => ({
-    params: { slug: verb.slug },
+    params: { slug: verb.id },
     props: { verb },
   }));
 }
