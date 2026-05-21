@@ -8,3 +8,13 @@
 html.hide-furigana rt {
   display: none;
 }
+
+/* when furigana is shown, nudge plain text down to match ruby height */
+.possible-furigana:not(:has(ruby)) {
+  padding-top: 0.65em;
+}
+
+/* remove it when furigana is hidden */
+html.hide-furigana .possible-furigana:not(:has(ruby)) {
+  padding-top: 0;
+}
