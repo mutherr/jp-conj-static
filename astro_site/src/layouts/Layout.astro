@@ -1,4 +1,5 @@
 ---
+import FuriganaToggle from "../components/FuriganaToggle.astro";
 import "../styles/global.css";
 ---
 
@@ -23,7 +24,6 @@ import "../styles/global.css";
       class="navbar bg-base-100 shadow-sm sticky top-0 z-50 border-b border-base-300"
     >
       <div class="max-w-7xl mx-auto w-full px-4 flex">
-        <!-- Left: logo -->
         <div class="flex-1">
           <a href="/" class="btn btn-ghost text-lg font-bold gap-2">
             <span class="text-2xl">🇯🇵</span>
@@ -36,16 +36,12 @@ import "../styles/global.css";
           </a>
         </div>
 
-        <!-- Right: nav items + toggle all in one place -->
         <div class="flex-none flex items-center gap-1">
           <a href="/verbs" class="btn btn-ghost btn-sm">Verbs</a>
 
           <div class="divider divider-horizontal mx-0"></div>
 
-          <button id="furigana-toggle" class="btn btn-ghost btn-sm gap-2">
-            <span>Furigana</span>
-            <span id="furigana-indicator" class="badge badge-sm">ON</span>
-          </button>
+          <FuriganaToggle />
         </div>
       </div>
     </nav>
