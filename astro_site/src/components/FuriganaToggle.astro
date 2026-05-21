@@ -8,6 +8,11 @@
   const indicator = document.getElementById("furigana-indicator");
   const html = document.documentElement;
 
+  if (!toggle || !indicator) {
+    console.warn("Furigana toggle elements not found");
+    return;
+  }
+
   // Set initial indicator state
   const isHidden = html.classList.contains("hide-furigana");
   indicator.textContent = isHidden ? "OFF" : "ON";
