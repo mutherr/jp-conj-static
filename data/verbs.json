@@ -6685,7 +6685,7 @@
     "id": 550,
     "term": "言い始める",
     "reading": "いいはじめる",
-    "furigana": "い<ruby>始<rt>いはじ</rt></ruby>める",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>始<rt>はじ</rt></ruby>める",
     "type": "v1",
     "tags": [
       "1",
@@ -14234,7 +14234,7 @@
     "id": 1171,
     "term": "言い残す",
     "reading": "いいのこす",
-    "furigana": "い<ruby>残<rt>いのこ</rt></ruby>す",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>残<rt>のこ</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",
@@ -19908,7 +19908,7 @@
     "id": 1634,
     "term": "言い習わす",
     "reading": "いいならわす",
-    "furigana": "い<ruby>習<rt>いなら</rt></ruby>わす",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>習<rt>なら</rt></ruby>わす",
     "type": "v5",
     "tags": [
       "1",
@@ -19932,7 +19932,7 @@
     "id": 1636,
     "term": "言い出す",
     "reading": "いいだす",
-    "furigana": "い<ruby>出<rt>いだ</rt></ruby>す",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>出<rt>だ</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",
@@ -19944,7 +19944,7 @@
     "id": 1637,
     "term": "言い切る",
     "reading": "いいきる",
-    "furigana": "い<ruby>切<rt>いき</rt></ruby>る",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>切<rt>き</rt></ruby>る",
     "type": "v5",
     "tags": [
       "1",
@@ -19956,7 +19956,7 @@
     "id": 1638,
     "term": "言い伝える",
     "reading": "いいつたえる",
-    "furigana": "い<ruby>伝<rt>いつた</rt></ruby>える",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>伝<rt>つた</rt></ruby>える",
     "type": "v1",
     "tags": [
       "1",
@@ -19980,7 +19980,7 @@
     "id": 1640,
     "term": "言い表す",
     "reading": "いいあらわす",
-    "furigana": "い<ruby>表<rt>いあらわ</rt></ruby>す",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>表<rt>あらわ</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",
@@ -19992,7 +19992,7 @@
     "id": 1641,
     "term": "言い表わす",
     "reading": "いいあらわす",
-    "furigana": "い<ruby>表<rt>いあら</rt></ruby>わす",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>表<rt>あら</rt></ruby>わす",
     "type": "v5",
     "tags": [
       "1",
@@ -20004,7 +20004,7 @@
     "id": 1642,
     "term": "言い現す",
     "reading": "いいあらわす",
-    "furigana": "い<ruby>現<rt>いあらわ</rt></ruby>す",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>現<rt>あらわ</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",
@@ -20040,7 +20040,7 @@
     "id": 1645,
     "term": "言い付ける",
     "reading": "いいつける",
-    "furigana": "い<ruby>付<rt>いつ</rt></ruby>ける",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>付<rt>つ</rt></ruby>ける",
     "type": "v1",
     "tags": [
       "1",
@@ -20052,7 +20052,7 @@
     "id": 1646,
     "term": "言い返す",
     "reading": "いいかえす",
-    "furigana": "い<ruby>返<rt>いかえ</rt></ruby>す",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>返<rt>かえ</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",
@@ -20064,7 +20064,7 @@
     "id": 1647,
     "term": "言い立てる",
     "reading": "いいたてる",
-    "furigana": "い<ruby>立<rt>いた</rt></ruby>てる",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>立<rt>た</rt></ruby>てる",
     "type": "v1",
     "tags": [
       "1",
@@ -22176,7 +22176,7 @@
     "id": 1819,
     "term": "言い合う",
     "reading": "いいあう",
-    "furigana": "い<ruby>合<rt>いあ</rt></ruby>う",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>合<rt>あ</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -27546,7 +27546,7 @@
     "id": 2260,
     "term": "言い掛ける",
     "reading": "いいかける",
-    "furigana": "い<ruby>掛<rt>いか</rt></ruby>ける",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>掛<rt>か</rt></ruby>ける",
     "type": "v1",
     "tags": [
       "1",
@@ -27570,7 +27570,7 @@
     "id": 2262,
     "term": "言い損なう",
     "reading": "いいそこなう",
-    "furigana": "い<ruby>損<rt>いそこ</rt></ruby>なう",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>損<rt>そこ</rt></ruby>なう",
     "type": "v5",
     "tags": [
       "1",
@@ -27606,7 +27606,7 @@
     "id": 2265,
     "term": "言い囃す",
     "reading": "いいはやす",
-    "furigana": "い<ruby>囃<rt>いはや</rt></ruby>す",
+    "furigana": "<ruby>言<rt>い</rt></ruby>い<ruby>囃<rt>はや</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",

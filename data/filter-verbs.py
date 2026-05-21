@@ -6,10 +6,10 @@ DICT_PATH = "all/"
 
 def align(kanji: str, hiragana: str):
     matcher = difflib.SequenceMatcher(None, kanji, hiragana, autojunk=False)
-    print("------")
+    # print("------")
     furigana = ""
     for op, i1, i2, j1, j2 in matcher.get_opcodes():   
-        print(f"{op:7} | {kanji[i1:i2]!r:10} → {hiragana[j1:j2]!r}")
+        # print(f"{op:7} | {kanji[i1:i2]!r:10} → {hiragana[j1:j2]!r}")
         if op == "equal":
             furigana += hiragana[j1:j2]
         elif op == "replace":
@@ -30,7 +30,12 @@ class VerbEntry:
         if self.reading == self.term:
             furigana = ""
         else:
-            furigana = align(self.term, self.reading)
+            #workaround for the alignment being greedy with leading "いい" in verbs like
+            # いい伝える → いいつたえる
+            if self.term[0:2] == "言い":
+                furigana = f"<ruby>{self.term[0]}<rt>{self.reading[0]}</rt></ruby>い" + align(self.term[2:], self.reading[2:])
+            else:
+                furigana = align(self.term, self.reading)
 
         self.furigana = furigana
 
