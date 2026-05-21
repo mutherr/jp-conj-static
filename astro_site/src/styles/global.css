@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: dark --default, light;
+  themes:
+    dark --default,
+    light;
 }
 
 html.hide-furigana rt {

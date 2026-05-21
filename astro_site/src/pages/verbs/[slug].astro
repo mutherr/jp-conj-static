@@ -1,12 +1,12 @@
 ---
-import verbs from '../../data/verbs.json'
-import BaseLayout from '../../layouts/Layout.astro'
+import verbs from "../../data/verbs.json";
+import BaseLayout from "../../layouts/Layout.astro";
 
 export function getStaticPaths() {
   return verbs.map((verb) => ({
     params: { slug: `${verb.reading}-${verb.id}` },
     props: { verb },
-  }))
+  }));
 }
 ---
 
