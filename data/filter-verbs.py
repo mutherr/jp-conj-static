@@ -1,7 +1,20 @@
 import json
 import os
+import difflib
 
 DICT_PATH = "all/"
+
+def align(kanji: str, hiragana: str):
+    matcher = difflib.SequenceMatcher(None, kanji, hiragana, autojunk=False)
+    print("------")
+    furigana = ""
+    for op, i1, i2, j1, j2 in matcher.get_opcodes():   
+        print(f"{op:7} | {kanji[i1:i2]!r:10} → {hiragana[j1:j2]!r}")
+        if op == "equal":
+            furigana += hiragana[j1:j2]
+        elif op == "replace":
+            furigana += f"<ruby>{kanji[i1:i2]}<rt>{hiragana[j1:j2]}</rt></ruby>"
+    return furigana
 
 class VerbEntry:
     def __init__(self, entry, id):
@@ -10,12 +23,23 @@ class VerbEntry:
         self.reading = entry[1] if len(entry) > 1 else ""
         self.type = entry[3]
         self.tags = entry[2].split() if len(entry) > 2 else []
+        self.furigana = ""
+
+    def generateFurigana(self):
+        furigana = ""
+        if self.reading == self.term:
+            furigana = ""
+        else:
+            furigana = align(self.term, self.reading)
+
+        self.furigana = furigana
 
     def to_dict(self):
         return {
             "id": self.id,
             "term": self.term,
             "reading": self.reading,
+            "furigana": self.furigana,
             "type": self.type,
             "tags": self.tags,
         }
@@ -51,6 +75,7 @@ if __name__ == "__main__":
     print("Verbs:", len(verbs))
     
     verbs = [VerbEntry(v, i) for i, v in enumerate(verbs)]
+    [v.generateFurigana() for v in verbs]
 
     output_path = "verbs.json"
     with open(output_path, "w", encoding="utf-8") as f:
