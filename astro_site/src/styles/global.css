@@ -2,3 +2,7 @@
 @plugin "daisyui" {
   themes: dark --default, light;
 }
+
+html.hide-furigana rt {
+  display: none;
+}
