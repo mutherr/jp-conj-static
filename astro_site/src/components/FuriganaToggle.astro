@@ -4,14 +4,9 @@
 </button>
 
 <script>
-  const toggle = document.getElementById("furigana-toggle");
-  const indicator = document.getElementById("furigana-indicator");
+  const toggle = document.getElementById("furigana-toggle")!;
+  const indicator = document.getElementById("furigana-indicator")!;
   const html = document.documentElement;
-
-  if (!toggle || !indicator) {
-    console.warn("Furigana toggle elements not found");
-    return;
-  }
 
   const isHidden = html.classList.contains("hide-furigana");
   indicator.textContent = isHidden ? "OFF" : "ON";
@@ -21,6 +16,7 @@
     const hiding = html.classList.toggle("hide-furigana");
     localStorage.setItem("showFurigana", String(!hiding));
     indicator.textContent = hiding ? "OFF" : "ON";
+    console.log(`Furigana ${hiding ? "hidden" : "shown"}`);
     indicator.className = `badge badge-sm ${hiding ? "badge-ghost" : "badge-primary"}`;
   });
 </script>
