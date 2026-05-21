@@ -14,7 +14,6 @@ html.hide-furigana rt {
   padding-top: 0.65em;
 }
 
-/* remove it when furigana is hidden */
 html.hide-furigana .possible-furigana:not(:has(ruby)) {
   padding-top: 0;
 }
