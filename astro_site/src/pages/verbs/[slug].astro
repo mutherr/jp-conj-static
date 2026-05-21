@@ -1,0 +1,27 @@
+---
+import verbs from '../../data/verbs.json'
+import BaseLayout from '../../layouts/Layout.astro'
+
+export function getStaticPaths() {
+  return verbs.map((verb) => ({
+    params: { slug: `${verb.reading}-${verb.id}` },
+    props: { verb },
+  }))
+}
+---
+
+<BaseLayout>
+  <div id="primary">
+    <main id="main">
+      <article class="single-pg-container">
+        <h1 class="entry-title">{Astro.props.verb.term}</h1>
+      </article>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .location {
+    font-weight: bold;
+  }
+</style>

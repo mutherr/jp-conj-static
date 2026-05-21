@@ -1,0 +1,27 @@
+---
+import verbs from '../../data/verbs.json'
+import BaseLayout from '../../layouts/Layout.astro'
+
+
+const sortedVerbs = verbs.sort((a, b) => a.reading.localeCompare(b.reading))
+---
+
+<BaseLayout>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+    {verbs.map((verb) => (
+      <a
+        href={`/terms/${verb.reading}-${verb.id}`}
+        class="card bg-base-100 border border-base-300 shadow-sm
+               hover:shadow-md hover:border-primary/40 hover:-translate-y-0.5
+               transition-all duration-150 group"
+      >
+        <div class="card-body p-4 gap-1">
+          <span class="text-2xl font-bold group-hover:text-primary transition-colors">
+            {verb.term}
+          </span>
+          <p class="text-sm text-base-content/60 font-mono">{verb.reading}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</BaseLayout>
