@@ -1,12 +1,13 @@
 ---
-import '../styles/global.css'
+import "../styles/global.css";
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
     <script is:inline>
-      if (localStorage.getItem('showFurigana') === 'false') {
-        document.documentElement.classList.add('hide-furigana')
+      if (localStorage.getItem("showFurigana") === "false") {
+        document.documentElement.classList.add("hide-furigana");
       }
     </script>
     <meta charset="UTF-8" />
@@ -18,49 +19,34 @@ import '../styles/global.css'
   </head>
 
   <body class="min-h-screen bg-base-200 flex flex-col">
-
-    <nav class="navbar bg-base-100 shadow-sm sticky top-0 z-200 border-b border-base-300 backdrop-blur-md">
+    <nav
+      class="navbar bg-base-100 shadow-sm sticky top-0 z-50 border-b border-base-300"
+    >
       <div class="max-w-7xl mx-auto w-full px-4 flex">
+        <!-- Left: logo -->
         <div class="flex-1">
           <a href="/" class="btn btn-ghost text-lg font-bold gap-2">
             <span class="text-2xl">🇯🇵</span>
-            <span>
-              <span class="text-primary">日本語</span>
-              <span class="hidden sm:inline text-base-content/70 font-normal ml-1 text-sm">
-                Conjugation
-              </span>
+            <span class="text-primary">日本語</span>
+            <span
+              class="hidden sm:inline text-base-content/70 font-normal text-sm"
+            >
+              Conjugation
             </span>
           </a>
         </div>
-        <div class="flex-none">
-          <ul class="menu menu-horizontal gap-1 px-0">
-            <li><a href="/verbs" class="btn btn-ghost btn-sm">Verbs</a></li>
-          </ul>
-        </div>
-          <button
-            id="furigana-toggle"
-            class="btn btn-ghost btn-sm gap-2"
-          >
-            <span>振り仮名</span>
+
+        <!-- Right: nav items + toggle all in one place -->
+        <div class="flex-none flex items-center gap-1">
+          <a href="/verbs" class="btn btn-ghost btn-sm">Verbs</a>
+
+          <div class="divider divider-horizontal mx-0"></div>
+
+          <button id="furigana-toggle" class="btn btn-ghost btn-sm gap-2">
+            <span>Furigana</span>
             <span id="furigana-indicator" class="badge badge-sm">ON</span>
           </button>
-
-        <script>
-          const toggle = document.getElementById('furigana-toggle')
-          const indicator = document.getElementById('furigana-indicator')
-          const html = document.documentElement
-
-          const isHidden = html.classList.contains('hide-furigana')
-          indicator.textContent = isHidden ? 'OFF' : 'ON'
-          indicator.className = `badge badge-sm ${isHidden ? 'badge-ghost' : 'badge-primary'}`
-
-          toggle?.addEventListener('click', () => {
-            const hiding = html.classList.toggle('hide-furigana')
-            localStorage.setItem('showFurigana', String(!hiding))
-            indicator.textContent = hiding ? 'OFF' : 'ON'
-            indicator.className = `badge badge-sm ${hiding ? 'badge-ghost' : 'badge-primary'}`
-          })
-        </script>
+        </div>
       </div>
     </nav>
 
@@ -68,9 +54,10 @@ import '../styles/global.css'
       <slot />
     </main>
 
-    <footer class="footer footer-center p-6 bg-base-100 border-t border-base-300 text-base-content/50 text-sm">
+    <footer
+      class="footer footer-center p-6 bg-base-100 border-t border-base-300 text-base-content/50 text-sm"
+    >
       <p>Japanese Conjugation Reference</p>
     </footer>
-
   </body>
 </html>

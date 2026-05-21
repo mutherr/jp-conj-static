@@ -1,28 +1,36 @@
 ---
-import verbs from '../../data/verbs.json'
-import BaseLayout from '../../layouts/Layout.astro'
+import verbs from "../../data/verbs.json";
+import BaseLayout from "../../layouts/Layout.astro";
 
-
-const sortedVerbs = verbs.sort((a, b) => a.reading.localeCompare(b.reading))
+const sortedVerbs = verbs.sort((a, b) => a.reading.localeCompare(b.reading));
 ---
 
 <BaseLayout>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-    {verbs.map((verb) => (
-      <a
-        href={`/verbs/${verb.reading}-${verb.id}`}
-        class="card bg-base-100 border border-base-300 shadow-sm
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
+  >
+    {
+      sortedVerbs.map((verb) => (
+        <a
+          href={`/verbs/${verb.reading}-${verb.id}`}
+          class="card bg-base-100 border border-base-300 shadow-sm
                hover:shadow-md hover:border-primary/40 hover:-translate-y-0.5
                transition-all duration-150 group"
-      >
-        <div class="card-body p-4 gap-1">
+        >
+          <div class="card-body p-4 gap-1">
             {verb.furigana ? (
-                <span class="text-2xl font-bold group-hover:text-primary transition-colors" set:html={verb.furigana} />
+              <span
+                class="text-2xl font-bold group-hover:text-primary transition-colors"
+                set:html={verb.furigana}
+              />
             ) : (
-                <p class="text-2xl font-bold group-hover:text-primary transition-colors">{verb.reading}</p>
+              <p class="text-2xl font-bold group-hover:text-primary transition-colors">
+                {verb.reading}
+              </p>
             )}
-        </div>
-      </a>
-    ))}
+          </div>
+        </a>
+      ))
+    }
   </div>
 </BaseLayout>
