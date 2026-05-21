@@ -10,7 +10,7 @@ const sortedVerbs = verbs.sort((a, b) => a.reading.localeCompare(b.reading))
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
     {verbs.map((verb) => (
       <a
-        href={`/terms/${verb.reading}-${verb.id}`}
+        href={`/verbs/${verb.reading}-${verb.id}`}
         class="card bg-base-100 border border-base-300 shadow-sm
                hover:shadow-md hover:border-primary/40 hover:-translate-y-0.5
                transition-all duration-150 group"
