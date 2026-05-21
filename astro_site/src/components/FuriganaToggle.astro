@@ -13,7 +13,6 @@
     return;
   }
 
-  // Set initial indicator state
   const isHidden = html.classList.contains("hide-furigana");
   indicator.textContent = isHidden ? "OFF" : "ON";
   indicator.className = `badge badge-sm ${isHidden ? "badge-ghost" : "badge-primary"}`;
