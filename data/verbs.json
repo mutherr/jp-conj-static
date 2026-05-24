@@ -4998,7 +4998,7 @@
     "id": 411,
     "term": "占う",
     "reading": "うらなう",
-    "furigana": "う",
+    "furigana": "<ruby>占<rt>うらな</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -5010,7 +5010,7 @@
     "id": 412,
     "term": "卜う",
     "reading": "うらなう",
-    "furigana": "う",
+    "furigana": "<ruby>卜<rt>うらな</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -9421,7 +9421,7 @@
     "id": 775,
     "term": "奪う",
     "reading": "うばう",
-    "furigana": "う",
+    "furigana": "<ruby>奪<rt>うば</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -22468,7 +22468,7 @@
     "id": 1843,
     "term": "歌う",
     "reading": "うたう",
-    "furigana": "う",
+    "furigana": "<ruby>歌<rt>うた</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -22481,7 +22481,7 @@
     "id": 1844,
     "term": "唄う",
     "reading": "うたう",
-    "furigana": "う",
+    "furigana": "<ruby>唄<rt>うた</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -22494,7 +22494,7 @@
     "id": 1845,
     "term": "詠う",
     "reading": "うたう",
-    "furigana": "う",
+    "furigana": "<ruby>詠<rt>うた</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -22507,7 +22507,7 @@
     "id": 1846,
     "term": "唱う",
     "reading": "うたう",
-    "furigana": "う",
+    "furigana": "<ruby>唱<rt>うた</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -32746,7 +32746,7 @@
     "id": 2687,
     "term": "謳う",
     "reading": "うたう",
-    "furigana": "う",
+    "furigana": "<ruby>謳<rt>うた</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -46598,7 +46598,7 @@
     "id": 3824,
     "term": "窺う",
     "reading": "うかがう",
-    "furigana": "う",
+    "furigana": "<ruby>窺<rt>うかが</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -46611,7 +46611,7 @@
     "id": 3825,
     "term": "覗う",
     "reading": "うかがう",
-    "furigana": "う",
+    "furigana": "<ruby>覗<rt>うかが</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -49746,7 +49746,7 @@
     "id": 4082,
     "term": "伺う",
     "reading": "うかがう",
-    "furigana": "う",
+    "furigana": "<ruby>伺<rt>うかが</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -50414,7 +50414,7 @@
     "id": 4137,
     "term": "失う",
     "reading": "うしなう",
-    "furigana": "う",
+    "furigana": "<ruby>失<rt>うしな</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -50426,7 +50426,7 @@
     "id": 4138,
     "term": "喪う",
     "reading": "うしなう",
-    "furigana": "う",
+    "furigana": "<ruby>喪<rt>うしな</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -52435,7 +52435,7 @@
     "id": 4304,
     "term": "潤う",
     "reading": "うるおう",
-    "furigana": "う",
+    "furigana": "<ruby>潤<rt>うるお</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
@@ -52447,7 +52447,7 @@
     "id": 4305,
     "term": "霑う",
     "reading": "うるおう",
-    "furigana": "う",
+    "furigana": "<ruby>霑<rt>うるお</rt></ruby>う",
     "type": "v5",
     "tags": [
       "1",
