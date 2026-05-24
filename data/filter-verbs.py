@@ -112,6 +112,7 @@ if __name__ == "__main__":
     verbs = [d[:-1] for d in data if isVerb(d)]
     #deduplicate at headword level by taking first sense of each headword
     verbs = [v for v in verbs if "1" in v[2].split()]
+    verbs.append(["する", "する", "vs", "999999"])
 
     print("Total entries:", len(data))
     print("Verbs:", len(verbs))
