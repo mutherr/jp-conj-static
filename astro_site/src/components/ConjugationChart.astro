@@ -1,0 +1,51 @@
+---
+let { conjugations } = Astro.props;
+
+type ChartEntry = {
+  label?: string;
+  plain: string;
+  polite: string;
+};
+
+const chartEntries: { [key: string]: ChartEntry } = {
+  Present: { plain: conjugations.dictionary, polite: conjugations.polite },
+  Negative: {
+    plain: conjugations.negative,
+    polite: conjugations.negativePolite,
+  },
+  Past: { plain: conjugations.past, polite: conjugations.pastPolite },
+  PastNegative: {
+    plain: conjugations.negativePast,
+    polite: conjugations.negativePastPolite,
+  },
+  teForm: { label: "-Te Form", plain: conjugations.te, polite: "" },
+  potential: {
+    plain: conjugations.potential,
+    polite: conjugations.potentialPolite,
+  },
+  passive: { plain: conjugations.passive, polite: conjugations.passivePolite },
+};
+---
+
+<div class="overflow-x-auto">
+  <table class="table table-zebra w-full">
+    <thead>
+      <tr>
+        <th>Form</th>
+        <th>Plain</th>
+        <th>Polite</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        Object.entries(chartEntries).map(([form, conjugation]) => (
+          <tr>
+            <td>{conjugation.label || form}</td>
+            <td set:html={conjugation.plain} />
+            <td set:html={conjugation.polite} />
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,6 +1,11 @@
 ---
+import ConjugationChart from "../../components/ConjugationChart.astro";
 import verbs from "../../data/verbs.json";
 import BaseLayout from "../../layouts/Layout.astro";
+import { conjugate } from "../../utils/conjugation";
+
+const verb = Astro.props.verb;
+const conjugation = conjugate(verb.furigana || verb.term, verb.type);
 
 export function getStaticPaths() {
   return verbs.map((verb) => ({
@@ -14,7 +19,12 @@ export function getStaticPaths() {
   <div id="primary">
     <main id="main">
       <article class="single-pg-container">
-        <h1 class="entry-title">{Astro.props.verb.term}</h1>
+        <h1
+          class="entry-title text-2xl font-bold group-hover:text-primary transition-colors possible-furigana"
+          set:html={`Conjugation table for ${verb.furigana || verb.term}`}
+        />
+
+        <ConjugationChart conjugations={conjugation} />
       </article>
     </main>
   </div>
