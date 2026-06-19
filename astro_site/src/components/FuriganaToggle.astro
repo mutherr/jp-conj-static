@@ -16,7 +16,6 @@
     const hiding = html.classList.toggle("hide-furigana");
     localStorage.setItem("showFurigana", String(!hiding));
     indicator.textContent = hiding ? "OFF" : "ON";
-    console.log(`Furigana ${hiding ? "hidden" : "shown"}`);
     indicator.className = `badge badge-sm ${hiding ? "badge-ghost" : "badge-primary"}`;
   });
 </script>
