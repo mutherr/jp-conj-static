@@ -5,9 +5,12 @@
   "engines": {
     "node": ">=22.12.0"
   },
+  "resolutions": {
+    "vite": "6.3.0"
+  },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro check && astro build --base=/ && npx pagefind --site dist ",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",

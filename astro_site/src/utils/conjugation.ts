@@ -11,6 +11,7 @@ export type Conjugation = {
   potential: string;
   potentialPolite: string;
   passive: string;
+  passivePolite: string;
   causative: string;
   imperative: string;
   volitional: string;

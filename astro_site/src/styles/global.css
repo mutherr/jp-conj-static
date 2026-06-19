@@ -17,3 +17,13 @@ html.hide-furigana rt {
 html.hide-furigana .possible-furigana:not(:has(ruby)) {
   padding-top: 0;
 }
+
+#search {
+  --pagefind-ui-scale: 1;
+  --pagefind-ui-border-radius: 0.5rem;
+  --pagefind-ui-background: oklch(var(--b1));
+  --pagefind-ui-border: oklch(var(--b3));
+  --pagefind-ui-text: oklch(var(--bc));
+  --pagefind-ui-primary: oklch(var(--p));
+  --pagefind-ui-font: inherit;
+}

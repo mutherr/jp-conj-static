@@ -21,6 +21,7 @@ import "../styles/global.css";
 
   <body class="min-h-screen bg-base-200 flex flex-col">
     <nav
+      data-pagefind-ignore
       class="navbar bg-base-100 shadow-sm sticky top-0 z-50 border-b border-base-300"
     >
       <div class="max-w-7xl mx-auto w-full px-4 flex">
@@ -39,6 +40,21 @@ import "../styles/global.css";
         <div class="flex-none flex items-center gap-1">
           <a href="/verbs" class="btn btn-ghost btn-sm">Verbs</a>
 
+          <a href="/search" class="btn btn-ghost btn-sm">
+            <svg
+              class="w-4 h-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                clip-rule="evenodd"></path>
+            </svg>
+            Search
+          </a>
+
           <div class="divider divider-horizontal mx-0"></div>
 
           <FuriganaToggle />
@@ -51,6 +67,7 @@ import "../styles/global.css";
     </main>
 
     <footer
+      data-pagefind-ignore
       class="footer footer-center p-6 bg-base-100 border-t border-base-300 text-base-content/50 text-sm"
     >
       <p>Japanese Conjugation Reference</p>

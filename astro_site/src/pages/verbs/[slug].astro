@@ -18,7 +18,11 @@ export function getStaticPaths() {
 <BaseLayout>
   <div id="primary">
     <main id="main">
-      <article class="single-pg-container">
+      <article
+        class="single-pg-container"
+        data-pagefind-body
+        data-pagefind-meta={`title:${verb.term}, reading:${verb.reading}`}
+      >
         <h1
           class="entry-title text-2xl font-bold group-hover:text-primary transition-colors possible-furigana"
           set:html={`Conjugation table for ${verb.furigana || verb.term}`}
