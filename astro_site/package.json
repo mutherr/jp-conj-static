@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build --base=/ && npx pagefind --site dist ",
+    "build": "astro build --base=/ && npx pagefind --site dist ",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",

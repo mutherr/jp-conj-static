@@ -21,7 +21,7 @@ export function getStaticPaths() {
       <article
         class="single-pg-container"
         data-pagefind-body
-        data-pagefind-meta={`title:${verb.term}, reading:${verb.reading}`}
+        data-pagefind-meta={`title:${verb.term}, reading:${verb.reading}. ${verb.furigana ? `furigana:${verb.furigana}.` : ""} type:${verb.type}`}
       >
         <h1
           class="entry-title text-2xl font-bold group-hover:text-primary transition-colors possible-furigana"
