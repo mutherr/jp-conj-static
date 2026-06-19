@@ -5,9 +5,16 @@ import Layout from "../layouts/Layout.astro";
 <Layout>
   <div class="max-w-2xl mx-auto">
     <h1 class="text-4xl font-bold mb-8">Search</h1>
-    <pagefind-search></pagefind-search>
+    <div class="mb-12 flex flex-col gap-4" data-pf-theme="dark">
+      <pagefind-input></pagefind-input>
+      <pagefind-summary></pagefind-summary>
+      <pagefind-results></pagefind-results>
+    </div>
   </div>
 </Layout>
 
-<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
-<script is:inline src="/pagefind/pagefind-ui.js" type="module"></script>
+<script>
+  // @ts-ignore
+  import "@pagefind/component-ui/css";
+  import "@pagefind/component-ui";
+</script>
