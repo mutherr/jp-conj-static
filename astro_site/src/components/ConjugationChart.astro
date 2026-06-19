@@ -41,8 +41,8 @@ const chartEntries: { [key: string]: ChartEntry } = {
         Object.entries(chartEntries).map(([form, conjugation]) => (
           <tr>
             <td>{conjugation.label || form}</td>
-            <td set:html={conjugation.plain} />
-            <td set:html={conjugation.polite} />
+            <td class="possible-furigana" set:html={conjugation.plain} />
+            <td class="possible-furigana" set:html={conjugation.polite} />
           </tr>
         ))
       }
