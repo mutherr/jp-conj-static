@@ -18,10 +18,9 @@ const sortedVerbs = verbs.sort((a, b) => a.reading.localeCompare(b.reading));
                transition-all duration-150 group"
         >
           <div class="card-body p-4 gap-1">
-            <span
-              class="text-2xl font-bold group-hover:text-primary transition-colors possible-furigana"
-              set:html={verb.furigana || verb.term}
-            />
+            <span class="text-2xl font-bold group-hover:text-primary transition-colors possible-furigana">
+              <Fragment set:html={verb.furigana || verb.term} />
+            </span>
           </div>
         </a>
       ))

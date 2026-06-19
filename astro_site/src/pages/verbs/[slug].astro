@@ -25,11 +25,14 @@ export function getStaticPaths() {
       >
         <h1
           class="entry-title text-2xl font-bold group-hover:text-primary transition-colors possible-furigana"
+        >
+        </h1>
+        <Fragment
           set:html={`Conjugation table for ${verb.furigana || verb.term}`}
         />
-
-        <ConjugationChart conjugations={conjugation} />
       </article>
+
+      <ConjugationChart conjugations={conjugation} />
     </main>
   </div>
 </BaseLayout>
