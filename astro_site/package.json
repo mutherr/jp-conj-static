@@ -21,7 +21,7 @@
     "@astrojs/check": "^0.9.9",
     "@pagefind/component-ui": "^1.5.2",
     "@tailwindcss/vite": "^4.3.1",
-    "astro": "^6.4.8",
+    "astro": "^7.0.2",
     "astro-pagefind": "^2.0.0",
     "daisyui": "^5.5.23",
     "tailwindcss": "^4.3.1",
