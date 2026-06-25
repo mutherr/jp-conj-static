@@ -12,7 +12,11 @@ import Layout from "../layouts/Layout.astro";
         <script type="text/pagefind-template">
             <li class="custom-card p-4 border border-gray-200 rounded-lg">
                 <h3 class="text-xl font-bold text-blue-800">
-                    <a href="{{ url | safeUrl }}">{{ meta.title }}</a>
+                    <a href="{{ url | safeUrl }}">{{ meta.title }}
+                    {{#if meta.reading }}
+                        <span class="text-gray-500">({{ meta.reading }})</span>
+                    {{/if}}
+                    </a>
                 </h3>
             </li>
         </script>

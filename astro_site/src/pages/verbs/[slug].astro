@@ -13,23 +13,29 @@ export function getStaticPaths() {
     props: { verb },
   }));
 }
+
+const displayTerm = verb.furigana || verb.term;
 ---
 
 <BaseLayout>
   <div id="primary">
     <main id="main">
-      <article
-        class="single-pg-container"
-        data-pagefind-body
-        data-pagefind-meta={`title:${verb.term}, reading:${verb.reading}. ${verb.furigana ? `furigana:${verb.furigana}.` : ""} type:${verb.type}`}
-      >
+      <article class="single-pg-container" data-pagefind-body>
+        <span data-pagefind-meta="title" hidden>{verb.term}</span>
+        <span data-pagefind-meta="reading" hidden>{verb.reading}</span>
+        {
+          verb.furigana && (
+            <span data-pagefind-meta="furigana" hidden>
+              {verb.furigana}
+            </span>
+          )
+        }
+        <span data-pagefind-meta="type" hidden>{verb.type}</span>
         <h1
           class="entry-title text-2xl font-bold group-hover:text-primary transition-colors possible-furigana"
         >
+          <Fragment set:html={`Conjugation table for ${displayTerm}`} />
         </h1>
-        <Fragment
-          set:html={`Conjugation table for ${verb.furigana || verb.term}`}
-        />
       </article>
 
       <ConjugationChart conjugations={conjugation} />
