@@ -2,54 +2,169 @@
 let { conjugations } = Astro.props;
 
 type ChartEntry = {
-  label?: string;
+  label: string;
   plain: string;
-  polite: string;
+  polite?: string;
+  note?: string;
 };
 
-const chartEntries: { [key: string]: ChartEntry } = {
-  Present: { plain: conjugations.dictionary, polite: conjugations.polite },
-  Negative: {
-    plain: conjugations.negative,
-    polite: conjugations.negativePolite,
+const sections: Array<{ title: string; entries: ChartEntry[] }> = [
+  {
+    title: "Core Tense",
+    entries: [
+      {
+        label: "Dictionary",
+        plain: conjugations.dictionary,
+        polite: conjugations.polite,
+      },
+      {
+        label: "Negative",
+        plain: conjugations.negative,
+        polite: conjugations.negativePolite,
+      },
+      {
+        label: "Past",
+        plain: conjugations.past,
+        polite: conjugations.pastPolite,
+      },
+      {
+        label: "Past Negative",
+        plain: conjugations.negativePast,
+        polite: conjugations.negativePastPolite,
+      },
+      {
+        label: "Te Form",
+        plain: conjugations.te,
+        note: "No separate polite te-form",
+      },
+    ],
   },
-  Past: { plain: conjugations.past, polite: conjugations.pastPolite },
-  PastNegative: {
-    plain: conjugations.negativePast,
-    polite: conjugations.negativePastPolite,
+  {
+    title: "Voice and Potential",
+    entries: [
+      {
+        label: "Potential",
+        plain: conjugations.potential,
+        polite: conjugations.potentialPolite,
+      },
+      {
+        label: "Passive",
+        plain: conjugations.passive,
+        polite: conjugations.passivePolite,
+      },
+      {
+        label: "Causative",
+        plain: conjugations.causative,
+        note: "Polite variant not shown",
+      },
+    ],
   },
-  teForm: { label: "-Te Form", plain: conjugations.te, polite: "" },
-  potential: {
-    plain: conjugations.potential,
-    polite: conjugations.potentialPolite,
+  {
+    title: "Command and Intent",
+    entries: [
+      {
+        label: "Imperative",
+        plain: conjugations.imperative,
+        note: "Direct command form",
+      },
+      {
+        label: "Volitional",
+        plain: conjugations.volitional,
+        polite: conjugations.volitionalPolite,
+        note: "Let's do ...",
+      },
+    ],
   },
-  passive: { plain: conjugations.passive, polite: conjugations.passivePolite },
-};
+];
 ---
 
-<div class="overflow-x-auto">
-  <table class="table table-zebra w-full">
-    <thead>
-      <tr>
-        <th>Form</th>
-        <th>Plain</th>
-        <th>Polite</th>
-      </tr>
-    </thead>
-    <tbody>
-      {
-        Object.entries(chartEntries).map(([form, conjugation]) => (
-          <tr>
-            <td>{conjugation.label || form}</td>
-            <td class="possible-furigana">
-              <Fragment set:html={conjugation.plain} />
-            </td>
-            <td class="possible-furigana">
-              <Fragment set:html={conjugation.polite} />
-            </td>
-          </tr>
-        ))
-      }
-    </tbody>
-  </table>
+<div class="space-y-6">
+  {
+    sections.map((section) => (
+      <section class="space-y-3">
+        <h2 class="text-sm uppercase tracking-wide text-base-content/60 font-semibold">
+          {section.title}
+        </h2>
+
+        <div class="hidden md:block overflow-x-auto rounded-box border border-base-300 bg-base-100">
+          <table class="table table-zebra w-full">
+            <thead>
+              <tr>
+                <th class="w-40">Form</th>
+                <th>Plain</th>
+                <th>Polite</th>
+              </tr>
+            </thead>
+            <tbody>
+              {section.entries.map((entry) => (
+                <tr>
+                  <td>
+                    <div class="font-medium">{entry.label}</div>
+                    {entry.note && (
+                      <div class="text-xs text-base-content/60 mt-1">
+                        {entry.note}
+                      </div>
+                    )}
+                  </td>
+                  <td class="possible-furigana font-medium">
+                    <Fragment set:html={entry.plain} />
+                  </td>
+                  <td class="possible-furigana">
+                    {entry.polite ? (
+                      <Fragment set:html={entry.polite} />
+                    ) : (
+                      <span class="text-base-content/50">-</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:hidden">
+          {section.entries.map((entry) => (
+            <article class="card bg-base-100 border border-base-300 shadow-sm">
+              <div class="card-body p-4 gap-3">
+                <div class="flex items-start justify-between gap-3">
+                  <h3 class="font-semibold">{entry.label}</h3>
+                  {entry.note && (
+                    <span class="badge badge-ghost badge-xs">note</span>
+                  )}
+                </div>
+
+                <div class="space-y-2 text-sm">
+                  <div class="flex flex-col gap-1">
+                    <span class="text-base-content/60 uppercase tracking-wide text-xs">
+                      Plain
+                    </span>
+                    <span class="possible-furigana font-medium">
+                      <Fragment set:html={entry.plain} />
+                    </span>
+                  </div>
+
+                  <div class="flex flex-col gap-1">
+                    <span class="text-base-content/60 uppercase tracking-wide text-xs">
+                      Polite
+                    </span>
+                    <span class="possible-furigana">
+                      {entry.polite ? (
+                        <Fragment set:html={entry.polite} />
+                      ) : (
+                        <span class="text-base-content/50">-</span>
+                      )}
+                    </span>
+                  </div>
+                </div>
+
+                {entry.note && (
+                  <p class="text-xs text-base-content/60">{entry.note}</p>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))
+  }
 </div>

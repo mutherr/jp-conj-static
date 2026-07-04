@@ -15,6 +15,7 @@ export type Conjugation = {
   causative: string;
   imperative: string;
   volitional: string;
+  volitionalPolite: string;
 };
 
 type KanaMap = Record<string, string>;
@@ -120,6 +121,7 @@ export function conjugate(verb: string, type: string): Conjugation {
   let causative = "";
   let imperative = "";
   let volitional = "";
+  let volitionalPolite = "";
 
   const isSuru = type.includes("vs") || type === "999999";
   const isKuru = type.includes("vk");
@@ -148,6 +150,7 @@ export function conjugate(verb: string, type: string): Conjugation {
     causative = stem + "させる";
     imperative = stem + "しろ";
     volitional = stem + "しよう";
+    volitionalPolite = stem + "しましょう";
   } else if (isKuru) {
     const stem = kuruSuffix ? verb.slice(0, -kuruSuffix.length) : "";
     negative = stem + "こない";
@@ -165,6 +168,7 @@ export function conjugate(verb: string, type: string): Conjugation {
     causative = stem + "こさせる";
     imperative = stem + "こい";
     volitional = stem + "こよう";
+    volitionalPolite = stem + "きましょう";
   } else if (type.includes("v1")) {
     const stem = verb.slice(0, -1);
     negative = stem + "ない";
@@ -182,6 +186,7 @@ export function conjugate(verb: string, type: string): Conjugation {
     causative = stem + "させる";
     imperative = stem + "ろ";
     volitional = stem + "よう";
+    volitionalPolite = stem + "ましょう";
   } else if (type.includes("v5")) {
     const lastChar = verb.slice(-1);
     const stem = getStem(verb);
@@ -208,6 +213,7 @@ export function conjugate(verb: string, type: string): Conjugation {
         causative,
         imperative,
         volitional,
+        volitionalPolite,
       };
     }
 
@@ -226,6 +232,7 @@ export function conjugate(verb: string, type: string): Conjugation {
     causative = stem + aRow + "せる";
     imperative = stem + eRow;
     volitional = stem + oRow + "う";
+    volitionalPolite = stem + iRow + "ましょう";
   }
   return {
     dictionary: verb,
@@ -244,5 +251,6 @@ export function conjugate(verb: string, type: string): Conjugation {
     causative,
     imperative,
     volitional,
+    volitionalPolite,
   };
 }
