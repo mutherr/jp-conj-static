@@ -5451,7 +5451,7 @@
     "id": 448,
     "term": "聞き逃す",
     "reading": "ききのがす",
-    "furigana": "き<ruby>逃<rt>きのが</rt></ruby>す",
+    "furigana": "<ruby>聞<rt>き</rt></ruby>き<ruby>逃<rt>のが</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",
@@ -8792,7 +8792,7 @@
     "id": 723,
     "term": "打ち砕く",
     "reading": "うちくだく",
-    "furigana": "<ruby>打<rt>う</rt></ruby>ちく",
+    "furigana": "<ruby>打<rt>う</rt></ruby>ち<ruby>砕<rt>くだ</rt></ruby>く",
     "type": "v5",
     "tags": [
       "1",
@@ -8804,7 +8804,7 @@
     "id": 724,
     "term": "打ち砕く",
     "reading": "ぶちくだく",
-    "furigana": "<ruby>打<rt>ぶ</rt></ruby>ちく",
+    "furigana": "<ruby>打<rt>ぶ</rt></ruby>ち<ruby>砕<rt>くだ</rt></ruby>く",
     "type": "v5",
     "tags": [
       "1",
@@ -9862,7 +9862,7 @@
     "id": 811,
     "term": "築き上げる",
     "reading": "きずきあげる",
-    "furigana": "き<ruby>上<rt>ずきあ</rt></ruby>げる",
+    "furigana": "<ruby>築<rt>きず</rt></ruby>き<ruby>上<rt>あ</rt></ruby>げる",
     "type": "v1",
     "tags": [
       "1",
@@ -12801,7 +12801,7 @@
     "id": 1053,
     "term": "噛み砕く",
     "reading": "かみくだく",
-    "furigana": "<ruby>噛<rt>か</rt></ruby>みく",
+    "furigana": "<ruby>噛<rt>か</rt></ruby>み<ruby>砕<rt>くだ</rt></ruby>く",
     "type": "v5",
     "tags": [
       "1",
@@ -23512,7 +23512,7 @@
     "id": 1929,
     "term": "聞き返す",
     "reading": "ききかえす",
-    "furigana": "き<ruby>返<rt>きかえ</rt></ruby>す",
+    "furigana": "<ruby>聞<rt>き</rt></ruby>き<ruby>返<rt>かえ</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",
@@ -23524,7 +23524,7 @@
     "id": 1930,
     "term": "訊き返す",
     "reading": "ききかえす",
-    "furigana": "き<ruby>返<rt>きかえ</rt></ruby>す",
+    "furigana": "<ruby>訊<rt>き</rt></ruby>き<ruby>返<rt>かえ</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",
@@ -28732,7 +28732,7 @@
     "id": 2359,
     "term": "聞き外す",
     "reading": "ききはずす",
-    "furigana": "き<ruby>外<rt>きはず</rt></ruby>す",
+    "furigana": "<ruby>聞<rt>き</rt></ruby>き<ruby>外<rt>はず</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",
@@ -28758,7 +28758,7 @@
     "id": 2361,
     "term": "聞き損なう",
     "reading": "ききそこなう",
-    "furigana": "き<ruby>損<rt>きそこ</rt></ruby>なう",
+    "furigana": "<ruby>聞<rt>き</rt></ruby>き<ruby>損<rt>そこ</rt></ruby>なう",
     "type": "v5",
     "tags": [
       "1",
@@ -44240,7 +44240,7 @@
     "id": 3629,
     "term": "聞き覚える",
     "reading": "ききおぼえる",
-    "furigana": "き<ruby>覚<rt>きおぼ</rt></ruby>える",
+    "furigana": "<ruby>聞<rt>き</rt></ruby>き<ruby>覚<rt>おぼ</rt></ruby>える",
     "type": "v1",
     "tags": [
       "1",
@@ -44264,7 +44264,7 @@
     "id": 3631,
     "term": "聞き取る",
     "reading": "ききとる",
-    "furigana": "き<ruby>取<rt>きと</rt></ruby>る",
+    "furigana": "<ruby>聞<rt>き</rt></ruby>き<ruby>取<rt>と</rt></ruby>る",
     "type": "v5",
     "tags": [
       "1",
@@ -44276,7 +44276,7 @@
     "id": 3632,
     "term": "聴き取る",
     "reading": "ききとる",
-    "furigana": "き<ruby>取<rt>きと</rt></ruby>る",
+    "furigana": "<ruby>聴<rt>き</rt></ruby>き<ruby>取<rt>と</rt></ruby>る",
     "type": "v5",
     "tags": [
       "1",
@@ -44288,7 +44288,7 @@
     "id": 3633,
     "term": "聞き出す",
     "reading": "ききだす",
-    "furigana": "き<ruby>出<rt>きだ</rt></ruby>す",
+    "furigana": "<ruby>聞<rt>き</rt></ruby>き<ruby>出<rt>だ</rt></ruby>す",
     "type": "v5",
     "tags": [
       "1",
@@ -44324,7 +44324,7 @@
     "id": 3636,
     "term": "聞き付ける",
     "reading": "ききつける",
-    "furigana": "き<ruby>付<rt>きつ</rt></ruby>ける",
+    "furigana": "<ruby>聞<rt>き</rt></ruby>き<ruby>付<rt>つ</rt></ruby>ける",
     "type": "v1",
     "tags": [
       "1",
@@ -44348,7 +44348,7 @@
     "id": 3638,
     "term": "聞き分ける",
     "reading": "ききわける",
-    "furigana": "き<ruby>分<rt>きわ</rt></ruby>ける",
+    "furigana": "<ruby>聞<rt>き</rt></ruby>き<ruby>分<rt>わ</rt></ruby>ける",
     "type": "v1",
     "tags": [
       "1",
@@ -45288,7 +45288,7 @@
     "id": 3716,
     "term": "翻る",
     "reading": "ひるがえる",
-    "furigana": "<ruby>翻<rt>ひ</rt></ruby>る",
+    "furigana": "<ruby>翻<rt>ひるがえ</rt></ruby>る",
     "type": "v5",
     "tags": [
       "1",
@@ -45300,7 +45300,7 @@
     "id": 3717,
     "term": "飜る",
     "reading": "ひるがえる",
-    "furigana": "<ruby>飜<rt>ひ</rt></ruby>る",
+    "furigana": "<ruby>飜<rt>ひるがえ</rt></ruby>る",
     "type": "v5",
     "tags": [
       "1",
