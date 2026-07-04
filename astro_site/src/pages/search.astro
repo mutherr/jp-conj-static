@@ -1,32 +1,66 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const pagefindResultItemTemplate = String.raw`
+  <li class="verb-result-card custom-card">
+    <a href="{{ url | safeUrl }}" class="verb-result-link">
+      <div class="verb-result-header">
+        <h3 class="verb-result-title possible-furigana">{{ meta.title }}</h3>
+        <div class="verb-result-meta">
+          {{#if meta.type }}
+            <span class="verb-chip">{{ meta.type }}</span>
+          {{/if}}
+        </div>
+      </div>
+
+      {{#if meta.reading }}
+        <p class="verb-result-reading">{{ meta.reading }}</p>
+      {{/if}}
+
+      {{#if excerpt }}
+        <p class="verb-result-excerpt">{{ excerpt }}</p>
+      {{/if}}
+    </a>
+  </li>
+`;
 ---
 
 <Layout>
-  <div class="max-w-2xl mx-auto">
-    <h1 class="text-4xl font-bold mb-8">Search</h1>
-    <div class="mb-12 flex flex-col gap-4" data-pf-theme="dark">
+  <section class="max-w-4xl mx-auto space-y-6">
+    <div class="space-y-2">
+      <h1 class="text-4xl font-bold tracking-tight">Search Verbs</h1>
+      <p class="text-base-content/70">
+        Look up by kanji, reading, or phrase. Results include reading and verb group metadata.
+      </p>
+    </div>
+
+    <div class="verb-search-shell mb-12 flex flex-col gap-4" data-pf-theme="dark">
       <pagefind-input></pagefind-input>
       <pagefind-summary></pagefind-summary>
-      <pagefind-results>
-        <script type="text/pagefind-template">
-            <li class="custom-card p-4 border border-gray-200 rounded-lg">
-                <h3 class="text-xl font-bold text-blue-800">
-                    <a href="{{ url | safeUrl }}">{{ meta.title }}
-                    {{#if meta.reading }}
-                        <span class="text-gray-500">({{ meta.reading }})</span>
-                    {{/if}}
-                    </a>
-                </h3>
-            </li>
-        </script>
-      </pagefind-results>
+      <pagefind-results></pagefind-results>
     </div>
-  </div>
+
+    <template id="pagefind-result-template">
+      <Fragment set:html={pagefindResultItemTemplate} />
+    </template>
+  </section>
 </Layout>
 
 <script>
   // @ts-ignore
   import "@pagefind/component-ui/css";
-  import "@pagefind/component-ui";
+
+  const pagefindResults = document.querySelector("pagefind-results");
+  const templateSource = document.getElementById("pagefind-result-template");
+  const template = templateSource?.innerHTML.trim();
+
+  if (pagefindResults && template) {
+    const templateScript = document.createElement("script");
+    templateScript.type = "text/pagefind-template";
+    templateScript.textContent = template;
+    pagefindResults.append(templateScript);
+  }
+
+  // Load the custom elements after template injection.
+  import("@pagefind/component-ui");
 </script>
