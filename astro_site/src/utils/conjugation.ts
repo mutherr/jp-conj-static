@@ -124,39 +124,47 @@ export function conjugate(verb: string, type: string): Conjugation {
   const isSuru = type.includes("vs") || type === "999999";
   const isKuru = type.includes("vk");
   const isIkuException = /(行く|往く|逝く|いく|ゆく)$/.test(verb);
+  const suruSuffix = verb.endsWith("する") ? "する" : "";
+  const kuruSuffix = verb.endsWith("くる")
+    ? "くる"
+    : verb.endsWith("来る")
+      ? "来る"
+      : "";
 
   if (isSuru) {
-    negative = "しない";
-    polite = "します";
-    negativePolite = "しません";
-    past = "した";
-    negativePast = "しなかった";
-    pastPolite = "しました";
-    negativePastPolite = "しませんでした";
-    te = "して";
-    potential = "できる";
-    potentialPolite = "できます";
-    passive = "される";
-    passivePolite = "されます";
-    causative = "させる";
-    imperative = "しろ";
-    volitional = "しよう";
+    const stem = suruSuffix ? verb.slice(0, -suruSuffix.length) : "";
+    negative = stem + "しない";
+    polite = stem + "します";
+    negativePolite = stem + "しません";
+    past = stem + "した";
+    negativePast = stem + "しなかった";
+    pastPolite = stem + "しました";
+    negativePastPolite = stem + "しませんでした";
+    te = stem + "して";
+    potential = stem + "できる";
+    potentialPolite = stem + "できます";
+    passive = stem + "される";
+    passivePolite = stem + "されます";
+    causative = stem + "させる";
+    imperative = stem + "しろ";
+    volitional = stem + "しよう";
   } else if (isKuru) {
-    negative = "こない";
-    polite = "きます";
-    negativePolite = "きません";
-    past = "きた";
-    negativePast = "こなかった";
-    pastPolite = "きました";
-    negativePastPolite = "きませんでした";
-    te = "きて";
-    potential = "こられる";
-    potentialPolite = "こられます";
-    passive = "こられる";
-    passivePolite = "こられます";
-    causative = "こさせる";
-    imperative = "こい";
-    volitional = "こよう";
+    const stem = kuruSuffix ? verb.slice(0, -kuruSuffix.length) : "";
+    negative = stem + "こない";
+    polite = stem + "きます";
+    negativePolite = stem + "きません";
+    past = stem + "きた";
+    negativePast = stem + "こなかった";
+    pastPolite = stem + "きました";
+    negativePastPolite = stem + "きませんでした";
+    te = stem + "きて";
+    potential = stem + "こられる";
+    potentialPolite = stem + "こられます";
+    passive = stem + "こられる";
+    passivePolite = stem + "こられます";
+    causative = stem + "こさせる";
+    imperative = stem + "こい";
+    volitional = stem + "こよう";
   } else if (type.includes("v1")) {
     const stem = verb.slice(0, -1);
     negative = stem + "ない";
