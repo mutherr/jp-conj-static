@@ -154,11 +154,11 @@ export function conjugate(verb: string, type: string): Conjugation {
     te = stem + teEndings[lastChar];
     potential = stem + eGyou[lastChar] + "る";
     potentialPolite = stem + eGyou[lastChar] + "ます";
-    passive = stem + eGyou[lastChar] + "られる";
+    passive = stem + eGyou[lastChar] + "れる";
     passivePolite = stem + eGyou[lastChar] + "られます";
-    causative = stem + "させる";
-    imperative = oGyou[lastChar];
-    volitional = stem + "う";
+    causative = stem + aGyou[lastChar] + "せる";
+    imperative = stem + eGyou[lastChar];
+    volitional = stem + oGyou[lastChar] + "う";
   }
   return {
     dictionary: verb,
