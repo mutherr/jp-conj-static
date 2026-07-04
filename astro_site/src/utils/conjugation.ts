@@ -17,7 +17,9 @@ export type Conjugation = {
   volitional: string;
 };
 
-const aGyou: { [key: string]: string } = {
+type KanaMap = Record<string, string>;
+
+const aGyou: KanaMap = {
   う: "わ",
   つ: "た",
   る: "ら",
@@ -30,7 +32,7 @@ const aGyou: { [key: string]: string } = {
   す: "さ",
 };
 
-const iGyou: { [key: string]: string } = {
+const iGyou: KanaMap = {
   う: "い",
   つ: "ち",
   る: "り",
@@ -43,7 +45,7 @@ const iGyou: { [key: string]: string } = {
   す: "し",
 };
 
-const eGyou: { [key: string]: string } = {
+const eGyou: KanaMap = {
   う: "え",
   つ: "て",
   る: "れ",
@@ -56,7 +58,7 @@ const eGyou: { [key: string]: string } = {
   す: "せ",
 };
 
-const oGyou: { [key: string]: string } = {
+const oGyou: KanaMap = {
   う: "お",
   つ: "と",
   る: "ろ",
@@ -69,7 +71,7 @@ const oGyou: { [key: string]: string } = {
   す: "そ",
 };
 
-const pastEndings: { [key: string]: string } = {
+const pastEndings: KanaMap = {
   う: "った",
   つ: "った",
   る: "った",
@@ -82,7 +84,7 @@ const pastEndings: { [key: string]: string } = {
   す: "した",
 };
 
-const teEndings: { [key: string]: string } = {
+const teEndings: KanaMap = {
   う: "って",
   つ: "って",
   る: "って",
@@ -95,20 +97,14 @@ const teEndings: { [key: string]: string } = {
   す: "して",
 };
 
-function getStem(verb: string, type: string): string {
+function getStem(verb: string): string {
   if (!verb || verb.length === 0) {
     return "";
   }
-  if (type.includes("v1")) {
-    return verb.slice(0, -1);
-  } else if (type.includes("v5")) {
-    return verb.slice(0, -1);
-  }
-  return verb;
+  return verb.slice(0, -1);
 }
 
 export function conjugate(verb: string, type: string): Conjugation {
-  // This is a placeholder implementation. You would need to implement the actual conjugation logic here.
   let polite = "";
   let negative = "";
   let past = "";
@@ -124,7 +120,44 @@ export function conjugate(verb: string, type: string): Conjugation {
   let causative = "";
   let imperative = "";
   let volitional = "";
-  if (type.includes("v1")) {
+
+  const isSuru = type.includes("vs") || type === "999999";
+  const isKuru = type.includes("vk");
+  const isIkuException = /(行く|往く|逝く|いく|ゆく)$/.test(verb);
+
+  if (isSuru) {
+    negative = "しない";
+    polite = "します";
+    negativePolite = "しません";
+    past = "した";
+    negativePast = "しなかった";
+    pastPolite = "しました";
+    negativePastPolite = "しませんでした";
+    te = "して";
+    potential = "できる";
+    potentialPolite = "できます";
+    passive = "される";
+    passivePolite = "されます";
+    causative = "させる";
+    imperative = "しろ";
+    volitional = "しよう";
+  } else if (isKuru) {
+    negative = "こない";
+    polite = "きます";
+    negativePolite = "きません";
+    past = "きた";
+    negativePast = "こなかった";
+    pastPolite = "きました";
+    negativePastPolite = "きませんでした";
+    te = "きて";
+    potential = "こられる";
+    potentialPolite = "こられます";
+    passive = "こられる";
+    passivePolite = "こられます";
+    causative = "こさせる";
+    imperative = "こい";
+    volitional = "こよう";
+  } else if (type.includes("v1")) {
     const stem = verb.slice(0, -1);
     negative = stem + "ない";
     polite = stem + "ます";
@@ -143,22 +176,48 @@ export function conjugate(verb: string, type: string): Conjugation {
     volitional = stem + "よう";
   } else if (type.includes("v5")) {
     const lastChar = verb.slice(-1);
-    const stem = getStem(verb, type);
-    negative = stem + aGyou[lastChar] + "ない";
-    polite = stem + iGyou[lastChar] + "ます";
-    negativePolite = stem + iGyou[lastChar] + "ません";
-    past = stem + pastEndings[lastChar];
-    negativePast = stem + aGyou[lastChar] + "なかった";
-    pastPolite = stem + iGyou[lastChar] + "ました";
-    negativePastPolite = stem + iGyou[lastChar] + "ませんでした";
-    te = stem + teEndings[lastChar];
-    potential = stem + eGyou[lastChar] + "る";
-    potentialPolite = stem + eGyou[lastChar] + "ます";
-    passive = stem + eGyou[lastChar] + "れる";
-    passivePolite = stem + eGyou[lastChar] + "られます";
-    causative = stem + aGyou[lastChar] + "せる";
-    imperative = stem + eGyou[lastChar];
-    volitional = stem + oGyou[lastChar] + "う";
+    const stem = getStem(verb);
+    const aRow = aGyou[lastChar];
+    const iRow = iGyou[lastChar];
+    const eRow = eGyou[lastChar];
+    const oRow = oGyou[lastChar];
+
+    if (!aRow || !iRow || !eRow || !oRow) {
+      return {
+        dictionary: verb,
+        polite,
+        negative,
+        negativePolite,
+        past,
+        negativePast,
+        pastPolite,
+        negativePastPolite,
+        te,
+        potential,
+        potentialPolite,
+        passive,
+        passivePolite,
+        causative,
+        imperative,
+        volitional,
+      };
+    }
+
+    negative = stem + aRow + "ない";
+    polite = stem + iRow + "ます";
+    negativePolite = stem + iRow + "ません";
+    past = isIkuException ? stem + "った" : stem + pastEndings[lastChar];
+    negativePast = stem + aRow + "なかった";
+    pastPolite = stem + iRow + "ました";
+    negativePastPolite = stem + iRow + "ませんでした";
+    te = isIkuException ? stem + "って" : stem + teEndings[lastChar];
+    potential = stem + eRow + "る";
+    potentialPolite = stem + eRow + "ます";
+    passive = stem + aRow + "れる";
+    passivePolite = stem + aRow + "れます";
+    causative = stem + aRow + "せる";
+    imperative = stem + eRow;
+    volitional = stem + oRow + "う";
   }
   return {
     dictionary: verb,
