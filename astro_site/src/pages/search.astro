@@ -1,66 +1,25 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-const pagefindResultItemTemplate = String.raw`
-  <li class="verb-result-card custom-card">
-    <a href="{{ url | safeUrl }}" class="verb-result-link">
-      <div class="verb-result-header">
-        <h3 class="verb-result-title possible-furigana">{{ meta.title }}</h3>
-        <div class="verb-result-meta">
-          {{#if meta.type }}
-            <span class="verb-chip">{{ meta.type }}</span>
-          {{/if}}
-        </div>
-      </div>
-
-      {{#if meta.reading }}
-        <p class="verb-result-reading">{{ meta.reading }}</p>
-      {{/if}}
-
-      {{#if excerpt }}
-        <p class="verb-result-excerpt">{{ excerpt }}</p>
-      {{/if}}
-    </a>
-  </li>
-`;
 ---
 
-<Layout>
-  <section class="max-w-4xl mx-auto space-y-6">
-    <div class="space-y-2">
-      <h1 class="text-4xl font-bold tracking-tight">Search Verbs</h1>
-      <p class="text-base-content/70">
-        Look up by kanji, reading, or phrase. Results include reading and verb group metadata.
-      </p>
-    </div>
-
-    <div class="verb-search-shell mb-12 flex flex-col gap-4" data-pf-theme="dark">
-      <pagefind-input></pagefind-input>
-      <pagefind-summary></pagefind-summary>
-      <pagefind-results></pagefind-results>
-    </div>
-
-    <template id="pagefind-result-template">
-      <Fragment set:html={pagefindResultItemTemplate} />
-    </template>
+<Layout
+  title="Search Japanese Verbs | Japanese Verb Conjugation"
+  description="Search Japanese verbs by written form or reading."
+>
+  <section class="max-w-xl mx-auto text-center space-y-4">
+    <h1 class="text-3xl font-bold">Search has moved</h1>
+    <p class="text-base-content/70">
+      Search and filters are now combined in the verb browser.
+    </p>
+    <a id="verb-browser-link" href="/verbs" class="btn btn-primary"
+      >Browse verbs</a
+    >
   </section>
+
+  <script is:inline>
+    const target = `/verbs${window.location.search}`;
+    const link = document.getElementById("verb-browser-link");
+    if (link) link.setAttribute("href", target);
+    window.location.replace(target);
+  </script>
 </Layout>
-
-<script>
-  // @ts-ignore
-  import "@pagefind/component-ui/css";
-
-  const pagefindResults = document.querySelector("pagefind-results");
-  const templateSource = document.getElementById("pagefind-result-template");
-  const template = templateSource?.innerHTML.trim();
-
-  if (pagefindResults && template) {
-    const templateScript = document.createElement("script");
-    templateScript.type = "text/pagefind-template";
-    templateScript.textContent = template;
-    pagefindResults.append(templateScript);
-  }
-
-  // Load the custom elements after template injection.
-  import("@pagefind/component-ui");
-</script>
