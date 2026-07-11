@@ -1,46 +1,35 @@
-# Astro Starter Kit: Basics
+# Japanese Verb Conjugation
+
+Static Astro reference site for browsing and searching Japanese verb conjugations. The production build generates one page per dictionary entry and indexes those pages with Pagefind.
+
+## Development
+
+Requires Node 22.12 or newer.
 
 ```sh
-npm create astro@latest -- --template basics
+npm ci
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The verb browser uses the generated Pagefind index in production. During `astro dev`, `astro-pagefind` serves the most recent index from `dist/`; run `npm run build` once before starting development when no index exists yet.
 
-## 🚀 Project Structure
+## Verification
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```sh
+npm run lint
+npm run astro -- check
+npm test
+npm run test:e2e
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+`npm run test:e2e` performs the production build before running Playwright. Run `npm run build` directly to generate `dist/` and its Pagefind index without browser tests.
 
-## 🧞 Commands
+On a new machine, install the Playwright browser and its system dependencies once with `npx playwright install --with-deps chromium`.
 
-All commands are run from the root of the project, from a terminal:
+## Dictionary Data
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+From the repository's `data/` directory, regenerate `astro_site/src/data/verbs.json` with:
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```sh
+python filter-verbs.py
+```
