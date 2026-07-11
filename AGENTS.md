@@ -20,4 +20,4 @@
 - `src/pages/verbs/[slug].astro` creates detail URLs as `<reading>-<id>`. Keep links in `src/pages/verbs/index.astro` aligned with that scheme.
 - Dictionary-entry furigana is generated in Python and stored in `verbs.json`; conjugated-form furigana is generated separately by `src/utils/ruby.ts` after `src/utils/conjugation.ts` creates term and reading forms.
 - Pagefind indexes only detail-page content marked `data-pagefind-body`; searchable fields come from the `data-pagefind-meta` elements in `[slug].astro`. Verify search changes against a production build, not only `astro dev`.
-- The production verb browser queries Pagefind and loads only visible result metadata. `astro dev` instead embeds `verbs.json` because no Pagefind index exists until a production build.
+- The verb browser always queries Pagefind and loads only visible result metadata. `astro-pagefind` serves the most recent `dist/pagefind` index during `astro dev`, so run a production build once after data or index-field changes and restart the dev server.
