@@ -4,6 +4,7 @@ import verbs from "../../data/verbs.json";
 import BaseLayout from "../../layouts/Layout.astro";
 import { conjugate, type Conjugation } from "../../utils/conjugation";
 import { toRuby } from "../../utils/ruby";
+import { getVerbGroupLabel } from "../../utils/verbs";
 
 const verb = Astro.props.verb;
 const termConjugation = conjugate(verb.term || verb.reading, verb.type);
@@ -24,14 +25,20 @@ export function getStaticPaths() {
 }
 
 const displayTerm = verb.furigana || verb.term;
+const groupLabel = getVerbGroupLabel(verb.type);
 ---
 
-<BaseLayout>
+<BaseLayout
+  title={`${verb.term} conjugation | Japanese Verb Conjugation`}
+  description={`Conjugation table for ${verb.term} (${verb.reading}), a Japanese ${groupLabel.toLowerCase()} verb.`}
+>
   <div id="primary">
     <main id="main">
       <article class="single-pg-container" data-pagefind-body>
         <span data-pagefind-meta="title" hidden>{verb.term}</span>
-        <span data-pagefind-meta="reading" hidden>{verb.reading}</span>
+        <span data-pagefind-meta="reading" data-pagefind-sort="reading" hidden
+          >{verb.reading}</span
+        >
         {
           verb.furigana && (
             <span data-pagefind-meta="furigana" hidden>
@@ -40,20 +47,22 @@ const displayTerm = verb.furigana || verb.term;
           )
         }
         <span data-pagefind-meta="type" hidden>{verb.type}</span>
+        <span data-pagefind-meta="group" data-pagefind-filter="group" hidden
+          >{groupLabel}</span
+        >
+        <a href="/verbs" class="btn btn-ghost btn-sm mb-4">← Browse verbs</a>
         <h1
           class="entry-title text-2xl font-bold group-hover:text-primary transition-colors possible-furigana"
         >
           <Fragment set:html={`Conjugation table for ${displayTerm}`} />
         </h1>
-      </article>
+        <div class="flex flex-wrap items-center gap-2 mt-3 mb-8">
+          <span class="text-base-content/70">Reading: {verb.reading}</span>
+          <span class="badge badge-outline">{groupLabel}</span>
+        </div>
 
-      <ConjugationChart conjugations={conjugation} />
+        <ConjugationChart conjugations={conjugation} />
+      </article>
     </main>
   </div>
 </BaseLayout>
-
-<style>
-  .location {
-    font-weight: bold;
-  }
-</style>
