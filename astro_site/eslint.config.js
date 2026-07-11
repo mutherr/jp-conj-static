@@ -5,9 +5,12 @@ import astroParser from "astro-eslint-parser";
 import eslintConfigPrettier from "eslint-config-prettier";
 
 export default [
+  {
+    ignores: [".astro/**", "dist/**", "node_modules/**"],
+  },
   js.configs.recommended,
-  ...astroPlugin.configs.recommended,
-  ...astroPlugin.configs["jsx-a11y-recommended"],
+  ...astroPlugin.configs["flat/recommended"],
+  ...astroPlugin.configs["flat/jsx-a11y-recommended"],
 
   {
     languageOptions: {
