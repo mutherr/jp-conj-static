@@ -1,18 +1,11 @@
 ---
-import verbs from "../../data/verbs.json";
 import BaseLayout from "../../layouts/Layout.astro";
-
-const sortedVerbs = verbs.sort((a, b) => a.reading.localeCompare(b.reading));
-const verbsData = sortedVerbs.map((verb) => ({
-  id: verb.id,
-  term: verb.term,
-  reading: verb.reading,
-  furigana: verb.furigana || "",
-  type: verb.type || "",
-}));
 ---
 
-<BaseLayout>
+<BaseLayout
+  title="Browse Japanese Verbs | Japanese Verb Conjugation"
+  description="Search and filter thousands of Japanese verbs by written form, reading, and verb group."
+>
   <section class="space-y-6">
     <div class="flex flex-col gap-2">
       <h1 class="text-3xl font-bold">Browse Verbs</h1>
@@ -59,7 +52,13 @@ const verbsData = sortedVerbs.map((verb) => ({
     </div>
 
     <div class="flex items-center justify-between gap-3">
-      <p id="verbs-results" class="text-sm text-base-content/70">Loading...</p>
+      <p
+        id="verbs-results"
+        class="text-sm text-base-content/70"
+        aria-live="polite"
+      >
+        Loading verbs...
+      </p>
       <button id="clear-filters" class="btn btn-sm btn-ghost">Clear</button>
     </div>
 
@@ -67,6 +66,7 @@ const verbsData = sortedVerbs.map((verb) => ({
       id="verbs-grid"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
       aria-live="polite"
+      aria-busy="true"
     >
     </div>
 
@@ -79,9 +79,7 @@ const verbsData = sortedVerbs.map((verb) => ({
     </div>
   </section>
 
-  <script is:inline define:vars={{ verbsData }}>
-    const verbs = verbsData;
-
+  <script is:inline>
     const searchInput = document.getElementById("verb-search");
     const groupSelect = document.getElementById("verb-group");
     const perPageSelect = document.getElementById("verbs-per-page");
@@ -93,37 +91,21 @@ const verbsData = sortedVerbs.map((verb) => ({
     const pageIndicator = document.getElementById("page-indicator");
 
     const GROUP_VALUES = new Set(["all", "ichidan", "godan", "irregular"]);
+    const GROUP_LABELS = {
+      ichidan: "Ichidan",
+      godan: "Godan",
+      irregular: "Irregular",
+    };
     const PER_PAGE_VALUES = new Set(["48", "96", "192"]);
 
     let currentPage = 1;
-
-    const escapeHtml = (value) =>
-      value
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
-
-    const classifyGroup = (type) => {
-      if (String(type).includes("v1")) {
-        return "ichidan";
-      }
-      if (String(type).includes("v5")) {
-        return "godan";
-      }
-      return "irregular";
-    };
-
-    const withSearchText = verbs.map((verb) => ({
-      ...verb,
-      group: classifyGroup(verb.type),
-      searchText: `${verb.term} ${verb.reading}`.toLowerCase(),
-    }));
+    let pagefind;
+    let renderVersion = 0;
+    let inputTimer;
 
     const createVerbCard = (verb) => {
       const card = document.createElement("a");
-      card.href = `/verbs/${verb.reading}-${verb.id}`;
+      card.href = verb.url;
       card.className =
         "card bg-base-100 border border-base-300 shadow-sm hover:shadow-md hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-150 group";
 
@@ -136,16 +118,15 @@ const verbsData = sortedVerbs.map((verb) => ({
       const term = document.createElement("span");
       term.className =
         "text-2xl font-bold group-hover:text-primary transition-colors possible-furigana";
-      term.innerHTML = verb.furigana || escapeHtml(verb.term);
+      if (verb.furigana) {
+        term.innerHTML = verb.furigana;
+      } else {
+        term.textContent = verb.term;
+      }
 
       const badge = document.createElement("span");
       badge.className = "badge badge-outline badge-sm mt-1";
-      badge.textContent =
-        verb.group === "ichidan"
-          ? "Ichidan"
-          : verb.group === "godan"
-            ? "Godan"
-            : "Irregular";
+      badge.textContent = verb.groupLabel;
 
       row.append(term, badge);
 
@@ -158,26 +139,42 @@ const verbsData = sortedVerbs.map((verb) => ({
       return card;
     };
 
-    const filteredVerbs = () => {
-      const query = searchInput.value.trim().toLowerCase();
-      const group = groupSelect.value;
+    const getResults = async () => {
+      if (!pagefind) {
+        const pagefindPath = "/pagefind/pagefind.js";
+        pagefind = await import(/* @vite-ignore */ pagefindPath);
+        await pagefind.init();
+      }
 
-      return withSearchText.filter((verb) => {
-        const matchesGroup = group === "all" || verb.group === group;
-        const matchesQuery = !query || verb.searchText.includes(query);
-        return matchesGroup && matchesQuery;
-      });
+      const group = groupSelect.value;
+      const options = { sort: { reading: "asc" } };
+      if (group !== "all") {
+        options.filters = { group: GROUP_LABELS[group] };
+      }
+
+      const query = searchInput.value.trim();
+      const response = await pagefind.search(query || null, options);
+      return response.results;
+    };
+
+    const loadVerb = async (result) => {
+      const data = await result.data();
+      return {
+        term: data.meta.title || "Untitled",
+        reading: data.meta.reading || "",
+        furigana: data.meta.furigana || "",
+        groupLabel: data.meta.group || "Irregular",
+        url: data.url,
+      };
     };
 
     const applyStateFromUrl = () => {
       const params = new URLSearchParams(window.location.search);
-
-      const q = params.get("q") || "";
       const group = params.get("group") || "all";
       const perPage = params.get("perPage") || "96";
       const pageRaw = Number(params.get("page") || "1");
 
-      searchInput.value = q;
+      searchInput.value = params.get("q") || "";
       groupSelect.value = GROUP_VALUES.has(group) ? group : "all";
       perPageSelect.value = PER_PAGE_VALUES.has(perPage) ? perPage : "96";
       currentPage = Number.isInteger(pageRaw) && pageRaw > 0 ? pageRaw : 1;
@@ -185,63 +182,76 @@ const verbsData = sortedVerbs.map((verb) => ({
 
     const writeStateToUrl = () => {
       const params = new URLSearchParams();
-      const q = searchInput.value.trim();
-      const group = groupSelect.value;
-      const perPage = perPageSelect.value;
+      const query = searchInput.value.trim();
 
-      if (q) {
-        params.set("q", q);
+      if (query) params.set("q", query);
+      if (groupSelect.value !== "all") {
+        params.set("group", groupSelect.value);
       }
-      if (group !== "all") {
-        params.set("group", group);
+      if (perPageSelect.value !== "96") {
+        params.set("perPage", perPageSelect.value);
       }
-      if (perPage !== "96") {
-        params.set("perPage", perPage);
-      }
-      if (currentPage > 1) {
-        params.set("page", String(currentPage));
-      }
+      if (currentPage > 1) params.set("page", String(currentPage));
 
-      const next = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
+      const queryString = params.toString();
+      const next = `${window.location.pathname}${queryString ? `?${queryString}` : ""}`;
       if (next !== `${window.location.pathname}${window.location.search}`) {
         history.replaceState(null, "", next);
       }
     };
 
-    const render = () => {
-      const perPage = Number(perPageSelect.value);
-      const items = filteredVerbs();
-      const totalPages = Math.max(1, Math.ceil(items.length / perPage));
-      currentPage = Math.min(currentPage, totalPages);
+    const render = async () => {
+      const version = ++renderVersion;
+      grid.setAttribute("aria-busy", "true");
+      resultsText.textContent = "Loading verbs...";
+      prevButton.disabled = true;
+      nextButton.disabled = true;
 
-      const start = (currentPage - 1) * perPage;
-      const paged = items.slice(start, start + perPage);
+      try {
+        const items = await getResults();
+        if (version !== renderVersion) return;
 
-      grid.innerHTML = "";
-      if (paged.length === 0) {
-        const empty = document.createElement("p");
-        empty.className =
-          "col-span-full text-center text-base-content/60 py-10";
-        empty.textContent = "No verbs match your filters.";
-        grid.append(empty);
-      } else {
-        const fragment = document.createDocumentFragment();
-        for (const verb of paged) {
-          fragment.append(createVerbCard(verb));
+        const perPage = Number(perPageSelect.value);
+        const totalPages = Math.max(1, Math.ceil(items.length / perPage));
+        currentPage = Math.min(currentPage, totalPages);
+        const start = (currentPage - 1) * perPage;
+        const verbs = await Promise.all(
+          items.slice(start, start + perPage).map(loadVerb),
+        );
+        if (version !== renderVersion) return;
+
+        grid.replaceChildren();
+        if (verbs.length === 0) {
+          const empty = document.createElement("p");
+          empty.className =
+            "col-span-full text-center text-base-content/60 py-10";
+          empty.textContent = "No verbs match your filters.";
+          grid.append(empty);
+        } else {
+          const fragment = document.createDocumentFragment();
+          for (const verb of verbs) fragment.append(createVerbCard(verb));
+          grid.append(fragment);
         }
-        grid.append(fragment);
-      }
 
-      resultsText.textContent = `${items.length.toLocaleString()} matches`;
-      pageIndicator.textContent = `Page ${currentPage} / ${totalPages}`;
-      prevButton.disabled = currentPage <= 1;
-      nextButton.disabled = currentPage >= totalPages;
-      writeStateToUrl();
+        resultsText.textContent = `${items.length.toLocaleString()} matches`;
+        pageIndicator.textContent = `Page ${currentPage} / ${totalPages}`;
+        prevButton.disabled = currentPage <= 1;
+        nextButton.disabled = currentPage >= totalPages;
+        writeStateToUrl();
+      } catch (error) {
+        console.error(error);
+        grid.replaceChildren();
+        resultsText.textContent =
+          "The verb index is unavailable. Run npm run build once, then restart the development server.";
+      } finally {
+        if (version === renderVersion) grid.setAttribute("aria-busy", "false");
+      }
     };
 
     searchInput.addEventListener("input", () => {
       currentPage = 1;
-      render();
+      window.clearTimeout(inputTimer);
+      inputTimer = window.setTimeout(render, 150);
     });
 
     groupSelect.addEventListener("change", () => {
