@@ -6,6 +6,7 @@ astro_site/.astro/
 
 # dependencies
 astro_site/node_modules/
+astro_site/test-results/
 
 # logs
 npm-debug.log*
