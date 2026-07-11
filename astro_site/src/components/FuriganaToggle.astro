@@ -1,4 +1,9 @@
-<button id="furigana-toggle" class="btn btn-ghost btn-sm gap-2">
+<button
+  id="furigana-toggle"
+  type="button"
+  class="btn btn-ghost btn-sm gap-2"
+  aria-pressed="true"
+>
   <span>Furigana</span>
   <span id="furigana-indicator" class="badge badge-sm">ON</span>
 </button>
@@ -9,12 +14,14 @@
   const html = document.documentElement;
 
   const isHidden = html.classList.contains("hide-furigana");
+  toggle.setAttribute("aria-pressed", String(!isHidden));
   indicator.textContent = isHidden ? "OFF" : "ON";
   indicator.className = `badge badge-sm ${isHidden ? "badge-ghost" : "badge-primary"}`;
 
   toggle?.addEventListener("click", () => {
     const hiding = html.classList.toggle("hide-furigana");
     localStorage.setItem("showFurigana", String(!hiding));
+    toggle.setAttribute("aria-pressed", String(!hiding));
     indicator.textContent = hiding ? "OFF" : "ON";
     indicator.className = `badge badge-sm ${hiding ? "badge-ghost" : "badge-primary"}`;
   });
