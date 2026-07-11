@@ -22,40 +22,40 @@ const verbsData = sortedVerbs.map((verb) => ({
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
-      <label class="form-control md:col-span-2">
-        <div class="label">
+      <div class="form-control md:col-span-2">
+        <label for="verb-search" class="label">
           <span class="label-text">Search</span>
-        </div>
+        </label>
         <input
           id="verb-search"
           type="search"
           class="input input-bordered w-full"
           placeholder="Type kanji or reading..."
         />
-      </label>
+      </div>
 
-      <label class="form-control">
-        <div class="label">
+      <div class="form-control">
+        <label for="verb-group" class="label">
           <span class="label-text">Group</span>
-        </div>
+        </label>
         <select id="verb-group" class="select select-bordered w-full">
           <option value="all">All</option>
           <option value="ichidan">Ichidan</option>
           <option value="godan">Godan</option>
           <option value="irregular">Irregular</option>
         </select>
-      </label>
+      </div>
 
-      <label class="form-control">
-        <div class="label">
+      <div class="form-control">
+        <label for="verbs-per-page" class="label">
           <span class="label-text">Per page</span>
-        </div>
+        </label>
         <select id="verbs-per-page" class="select select-bordered w-full">
           <option value="48">48</option>
           <option value="96" selected>96</option>
           <option value="192">192</option>
         </select>
-      </label>
+      </div>
     </div>
 
     <div class="flex items-center justify-between gap-3">
