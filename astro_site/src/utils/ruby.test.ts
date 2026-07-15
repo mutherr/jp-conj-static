@@ -15,4 +15,10 @@ describe("toRuby", () => {
     expect(toRuby("<食>", "た")).toContain("&lt;");
     expect(toRuby("<食>", "た")).toContain("&gt;");
   });
+
+  it("splits repeated-kana compounds instead of swallowing a kanji's reading", () => {
+    expect(toRuby("引き切る", "ひききる")).toBe(
+      "<ruby>引<rt>ひ</rt></ruby>き<ruby>切<rt>き</rt></ruby>る",
+    );
+  });
 });

@@ -41,4 +41,12 @@ describe("conjugate", () => {
     expect(result.potential).toBe("勉強できる");
     expect(result.volitionalPolite).toBe("勉強しましょう");
   });
+
+  it("conjugates classical su-verbs tagged as both godan and suru", () => {
+    const result = conjugate("供す", "v5 vs");
+
+    expect(result.negative).toBe("供さない");
+    expect(result.past).toBe("供した");
+    expect(result.te).toBe("供して");
+  });
 });
