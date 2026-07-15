@@ -6,24 +6,66 @@
     dark --prefersdark;
 }
 
+/*
+ * Custom theme tokens, unlayered so they win over daisyui's `@layer base`
+ * regardless of selector order. Palette is drawn from washi paper, sumi ink,
+ * ai-iro indigo, and shu-iro hanko-stamp vermillion rather than the stock
+ * daisyui light/dark colors.
+ */
+:root {
+  --color-base-100: #f1f3ec;
+  --color-base-200: #e7eae0;
+  --color-base-300: #d6dacb;
+  --color-base-content: #211d16;
+
+  --color-primary: #1f3a5f;
+  --color-primary-content: #eef1ec;
+  --color-secondary: #45613b;
+  --color-secondary-content: #eef1ec;
+  --color-accent: #aa3a1c;
+  --color-accent-content: #f7ebe6;
+  --color-neutral: #211d16;
+  --color-neutral-content: #eef1ec;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-base-100: #1e2116;
+    --color-base-200: #181a12;
+    --color-base-300: #121409;
+    --color-base-content: #e7eae0;
+
+    --color-primary: #7ca0ce;
+    --color-primary-content: #0e1b2c;
+    --color-secondary: #8aae7c;
+    --color-secondary-content: #16210f;
+    --color-accent: #e2794a;
+    --color-accent-content: #2e1006;
+    --color-neutral: #3c4030;
+    --color-neutral-content: #e7eae0;
+  }
+}
+
 body {
   font-family:
     "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
   background:
-    radial-gradient(circle at 15% 10%, rgb(42 111 151 / 18%), transparent 33%),
-    radial-gradient(circle at 88% 12%, rgb(244 162 97 / 17%), transparent 28%),
-    linear-gradient(180deg, rgb(244 247 252 / 72%), rgb(228 236 247 / 72%));
+    radial-gradient(circle at 15% 10%, rgb(31 58 95 / 14%), transparent 33%),
+    radial-gradient(circle at 88% 12%, rgb(170 58 28 / 12%), transparent 28%),
+    linear-gradient(180deg, rgb(241 243 236 / 85%), rgb(231 234 224 / 85%));
 }
 
 h1,
 h2,
 h3 {
-  font-family: "Fraunces", Georgia, serif;
+  font-family: "Shippori Mincho", Georgia, serif;
   letter-spacing: 0.01em;
 }
 
-main {
-  animation: page-enter 220ms ease-out;
+@media (prefers-reduced-motion: no-preference) {
+  main {
+    animation: page-enter 220ms ease-out;
+  }
 }
 
 .navbar,
@@ -60,10 +102,84 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
     background:
       radial-gradient(
         circle at 18% 10%,
-        rgb(70 132 180 / 22%),
+        rgb(124 160 206 / 16%),
         transparent 35%
       ),
-      radial-gradient(circle at 88% 8%, rgb(244 162 97 / 20%), transparent 28%),
-      linear-gradient(180deg, rgb(13 19 27 / 100%), rgb(9 14 20 / 100%));
+      radial-gradient(circle at 88% 8%, rgb(226 121 74 / 14%), transparent 28%),
+      linear-gradient(180deg, rgb(24 26 18 / 100%), rgb(18 20 13 / 100%));
   }
+}
+
+/* Vowel-row: the five gojuon endings a godan stem cycles through */
+.vowel-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.6rem;
+}
+
+@media (max-width: 640px) {
+  .vowel-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.vowel-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.1rem 0.5rem;
+  border-radius: 0.75rem;
+  background: var(--color-base-100);
+  border: 1px solid var(--color-base-300);
+  text-align: center;
+}
+
+.vowel-cell.is-anchor {
+  background: color-mix(
+    in oklab,
+    var(--color-primary) 10%,
+    var(--color-base-100)
+  );
+  border-color: var(--color-primary);
+}
+
+.vowel-cell .kana-row {
+  font-family: "Shippori Mincho", serif;
+  font-size: 0.95rem;
+  color: color-mix(in oklab, var(--color-base-content) 45%, transparent);
+  letter-spacing: 0.05em;
+}
+
+.vowel-cell .conjugated-form {
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.vowel-cell .form-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: color-mix(in oklab, var(--color-base-content) 55%, transparent);
+}
+
+.row-mark,
+.suffix-mark {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+/* Ichidan mechanism card: static stem vs. changing suffix legend */
+.stem-legend {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+}
+
+.stem-legend .swatch {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 9999px;
 }
