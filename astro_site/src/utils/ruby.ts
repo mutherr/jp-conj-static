@@ -136,6 +136,32 @@ function normalizeRubyOps(ops: RubyOp[]): RubyOp[] {
         current.reading = current.reading.slice(overlap);
       }
     }
+
+    // Heuristic for repeated-kana compounds where LCS may produce:
+    // replace(A, x...y), equal(y), replace(B, "").
+    // Re-split so y stays in equal and trailing reading moves to B.
+    const next = normalized[index + 1];
+    const nextNext = normalized[index + 2];
+    if (
+      next &&
+      next.kind === "equal" &&
+      nextNext &&
+      nextNext.kind === "replace" &&
+      nextNext.reading === "" &&
+      kanaRe.test(next.term)
+    ) {
+      const equalChunk = next.term;
+      const splitAt = current.reading.indexOf(equalChunk);
+      if (splitAt > 0) {
+        const before = current.reading.slice(0, splitAt);
+        const after = current.reading.slice(splitAt + equalChunk.length);
+        const moved = after + equalChunk;
+        if (before && moved) {
+          current.reading = before;
+          nextNext.reading = moved;
+        }
+      }
+    }
   }
 
   return normalized;
