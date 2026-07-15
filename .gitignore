@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 static-site/dist/
 static-site/public/pagefind/
+
+# raw source images (only the derived, optimized assets are committed)
+astro_site/src/assets/textures/

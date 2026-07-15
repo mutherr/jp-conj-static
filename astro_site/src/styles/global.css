@@ -17,6 +17,9 @@
  * selectors below are mutually exclusive so source order never matters.
  */
 :root {
+  /* Strength of the washi texture behind all content — 0 hides it, 1 is full contrast. */
+  --texture-opacity: 0.15;
+
   --color-base-100: #f1f3ec;
   --color-base-200: #e7eae0;
   --color-base-300: #d6dacb;
@@ -69,10 +72,30 @@
 body {
   font-family:
     "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-  background:
-    radial-gradient(circle at 15% 10%, rgb(31 58 95 / 14%), transparent 33%),
-    radial-gradient(circle at 88% 12%, rgb(170 58 28 / 12%), transparent 28%),
-    linear-gradient(180deg, rgb(241 243 236 / 85%), rgb(231 234 224 / 85%));
+  background-color: var(--color-base-200);
+  /* z-index (even 0) forces body to own its stacking context, so the
+   * z-index:-1 texture below is scoped as its child instead of escaping
+   * to the root, where body's own background would paint over it. */
+  position: relative;
+  z-index: 0;
+}
+
+/*
+ * Washi texture lives on a pseudo-element behind all content, so its
+ * opacity can be tuned as a plain CSS number without fading page content
+ * (a `filter`/`opacity` on `body` itself would fade text too).
+ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--texture-opacity, 0.6);
+  background-color: var(--color-base-200);
+  background-image: url("/textures/washi-light.webp");
+  background-repeat: repeat;
+  background-blend-mode: multiply;
 }
 
 h1,
@@ -117,23 +140,17 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
   padding-top: 0;
 }
 
-:root[data-theme="dark"] body {
-  background:
-    radial-gradient(circle at 18% 10%, rgb(124 160 206 / 16%), transparent 35%),
-    radial-gradient(circle at 88% 8%, rgb(226 121 74 / 14%), transparent 28%),
-    linear-gradient(180deg, rgb(24 26 18 / 100%), rgb(18 20 13 / 100%));
+:root[data-theme="dark"] body::before {
+  background-color: var(--color-base-200);
+  background-image: url("/textures/washi-dark.webp");
+  background-blend-mode: screen;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) body {
-    background:
-      radial-gradient(
-        circle at 18% 10%,
-        rgb(124 160 206 / 16%),
-        transparent 35%
-      ),
-      radial-gradient(circle at 88% 8%, rgb(226 121 74 / 14%), transparent 28%),
-      linear-gradient(180deg, rgb(24 26 18 / 100%), rgb(18 20 13 / 100%));
+  :root:not([data-theme]) body::before {
+    background-color: var(--color-base-200);
+    background-image: url("/textures/washi-dark.webp");
+    background-blend-mode: screen;
   }
 }
 
@@ -192,6 +209,7 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
 
 .row-mark,
 .suffix-mark {
+  background: none;
   color: var(--color-accent);
   font-weight: 700;
 }
