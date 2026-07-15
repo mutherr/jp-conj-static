@@ -123,8 +123,12 @@ export function conjugate(verb: string, type: string): Conjugation {
   let volitional = "";
   let volitionalPolite = "";
 
-  const isSuru = type.includes("vs") || type === "999999";
   const isKuru = type.includes("vk");
+  const isSuru =
+    !isKuru &&
+    !type.includes("v1") &&
+    !type.includes("v5") &&
+    (type.includes("vs") || type === "999999");
   const isIkuException = /(行く|往く|逝く|いく|ゆく)$/.test(verb);
   const suruSuffix = verb.endsWith("する") ? "する" : "";
   const kuruSuffix = verb.endsWith("くる")
