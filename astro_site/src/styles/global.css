@@ -11,6 +11,10 @@
  * regardless of selector order. Palette is drawn from washi paper, sumi ink,
  * ai-iro indigo, and shu-iro hanko-stamp vermillion rather than the stock
  * daisyui light/dark colors.
+ *
+ * Dark values apply either from an explicit `data-theme="dark"` (set by
+ * ThemeToggle) or, absent that choice, from the OS preference — the two
+ * selectors below are mutually exclusive so source order never matters.
  */
 :root {
   --color-base-100: #f1f3ec;
@@ -28,8 +32,24 @@
   --color-neutral-content: #eef1ec;
 }
 
+:root[data-theme="dark"] {
+  --color-base-100: #1e2116;
+  --color-base-200: #181a12;
+  --color-base-300: #121409;
+  --color-base-content: #e7eae0;
+
+  --color-primary: #7ca0ce;
+  --color-primary-content: #0e1b2c;
+  --color-secondary: #8aae7c;
+  --color-secondary-content: #16210f;
+  --color-accent: #e2794a;
+  --color-accent-content: #2e1006;
+  --color-neutral: #3c4030;
+  --color-neutral-content: #e7eae0;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --color-base-100: #1e2116;
     --color-base-200: #181a12;
     --color-base-300: #121409;
@@ -97,8 +117,15 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
   padding-top: 0;
 }
 
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at 18% 10%, rgb(124 160 206 / 16%), transparent 35%),
+    radial-gradient(circle at 88% 8%, rgb(226 121 74 / 14%), transparent 28%),
+    linear-gradient(180deg, rgb(24 26 18 / 100%), rgb(18 20 13 / 100%));
+}
+
 @media (prefers-color-scheme: dark) {
-  body {
+  :root:not([data-theme]) body {
     background:
       radial-gradient(
         circle at 18% 10%,

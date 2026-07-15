@@ -1,5 +1,6 @@
 ---
 import FuriganaToggle from "../components/FuriganaToggle.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 import "../styles/global.css";
 
 type Props = {
@@ -19,6 +20,10 @@ const {
     <script is:inline>
       if (localStorage.getItem("showFurigana") === "false") {
         document.documentElement.classList.add("hide-furigana");
+      }
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        document.documentElement.setAttribute("data-theme", storedTheme);
       }
     </script>
     <meta charset="UTF-8" />
@@ -75,6 +80,10 @@ const {
           <div class="divider divider-horizontal mx-0"></div>
 
           <FuriganaToggle />
+
+          <div class="divider divider-horizontal mx-0"></div>
+
+          <ThemeToggle />
         </div>
       </div>
     </nav>
