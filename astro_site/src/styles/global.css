@@ -18,7 +18,7 @@
  */
 :root {
   /* Strength of the washi texture behind all content — 0 hides it, 1 is full contrast. */
-  --texture-opacity: 0.15;
+  --texture-opacity: 0.075;
 
   --color-base-100: #f1f3ec;
   --color-base-200: #e7eae0;
