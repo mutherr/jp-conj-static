@@ -47,10 +47,10 @@ const {
       class="navbar bg-base-100 shadow-sm sticky top-0 z-50 border-b border-base-300"
     >
       <div class="max-w-7xl mx-auto w-full px-4 flex">
-        <div class="flex-1">
-          <a href="/" class="btn btn-ghost text-lg font-bold gap-2">
+        <div class="flex-1 min-w-0">
+          <a href="/" class="btn btn-ghost text-lg font-bold gap-2 shrink-0">
             <span
-              class="text-primary"
+              class="text-primary whitespace-nowrap"
               style="font-family: 'Shippori Mincho', serif;">動詞</span
             >
             <span
@@ -62,7 +62,7 @@ const {
         </div>
 
         <div class="flex-none flex items-center gap-1">
-          <a href="/verbs" class="btn btn-ghost btn-sm">
+          <a href="/verbs" class="btn btn-ghost btn-sm" aria-label="Browse verbs">
             <svg
               class="w-4 h-4"
               xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@ const {
                 d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
                 clip-rule="evenodd"></path>
             </svg>
-            Browse verbs
+            <span class="hidden sm:inline">Browse verbs</span>
           </a>
 
           <div class="divider divider-horizontal mx-0"></div>
