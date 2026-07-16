@@ -227,7 +227,11 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
 /* Dictionary form: the row/card every other conjugation is derived from,
  * echoing the vowel-row "you are here" highlight on the homepage. */
 tr.is-anchor-row > td {
-  background: color-mix(in oklab, var(--color-primary) 10%, var(--color-base-100));
+  background: color-mix(
+    in oklab,
+    var(--color-primary) 10%,
+    var(--color-base-100)
+  );
 }
 
 tr.is-anchor-row > td:first-child {
@@ -235,7 +239,11 @@ tr.is-anchor-row > td:first-child {
 }
 
 .is-anchor-card {
-  background: color-mix(in oklab, var(--color-primary) 10%, var(--color-base-100));
+  background: color-mix(
+    in oklab,
+    var(--color-primary) 10%,
+    var(--color-base-100)
+  );
   border-color: var(--color-primary);
 }
 

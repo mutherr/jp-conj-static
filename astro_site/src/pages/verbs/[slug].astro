@@ -57,18 +57,19 @@ const groupBadge = getVerbGroupBadge(verb.type);
           >{groupLabel}</span
         >
         <a href="/verbs" class="btn btn-ghost btn-sm mb-4">← Browse verbs</a>
+        <p class="text-sm font-semibold uppercase tracking-widest text-accent mb-2">
+          Conjugation table
+        </p>
         <h1
-          class="entry-title text-2xl font-bold group-hover:text-primary transition-colors possible-furigana"
+          class="entry-title verb-term-font text-4xl md:text-5xl font-bold possible-furigana"
         >
-          Conjugation table for{" "}
-          <span class="verb-term-font">
-            <Fragment set:html={displayTerm} />
-          </span>
+          <Fragment set:html={displayTerm} />
         </h1>
-        <div class="flex flex-wrap items-center gap-2 mt-3 mb-8">
-          <span class="text-base-content/70">Reading: {verb.reading}</span>
-          <span class={`badge ${groupBadge.badgeClass}`}>{groupBadge.kanji}</span>
-          <span class="text-base-content/70">{groupLabel}</span>
+        <div class="flex flex-wrap items-center gap-3 mt-4 mb-8 text-base-content/70">
+          <span>Reading: {verb.reading}</span>
+          <span class={`badge gap-1.5 ${groupBadge.badgeClass}`}>
+            {groupBadge.kanji} {groupLabel}
+          </span>
         </div>
 
         <ConjugationChart conjugations={conjugation} />

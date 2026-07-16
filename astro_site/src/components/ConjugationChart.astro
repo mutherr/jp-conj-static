@@ -140,14 +140,10 @@ const sections: Array<{ title: string; entries: ChartEntry[] }> = [
               <div class="card-body p-4 gap-3">
                 <div class="flex items-start justify-between gap-3">
                   <h3 class="font-semibold">{entry.label}</h3>
-                  {entry.isBase ? (
+                  {entry.isBase && (
                     <span class="badge badge-primary badge-xs whitespace-nowrap">
                       Base form
                     </span>
-                  ) : (
-                    entry.note && (
-                      <span class="badge badge-ghost badge-xs">note</span>
-                    )
                   )}
                 </div>
 
