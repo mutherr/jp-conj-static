@@ -105,6 +105,14 @@ h3 {
   letter-spacing: 0.01em;
 }
 
+/* Verb kanji in a heading should match how it's rendered everywhere else on
+ * the site (table cells, homepage demos), not the serif display face. */
+.verb-term-font {
+  font-family:
+    "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  letter-spacing: normal;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   main {
     animation: page-enter 220ms ease-out;

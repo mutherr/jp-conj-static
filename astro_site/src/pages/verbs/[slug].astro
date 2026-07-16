@@ -60,7 +60,10 @@ const groupBadge = getVerbGroupBadge(verb.type);
         <h1
           class="entry-title text-2xl font-bold group-hover:text-primary transition-colors possible-furigana"
         >
-          <Fragment set:html={`Conjugation table for ${displayTerm}`} />
+          Conjugation table for{" "}
+          <span class="verb-term-font">
+            <Fragment set:html={displayTerm} />
+          </span>
         </h1>
         <div class="flex flex-wrap items-center gap-2 mt-3 mb-8">
           <span class="text-base-content/70">Reading: {verb.reading}</span>
