@@ -18,6 +18,11 @@ export type Conjugation = {
   volitionalPolite: string;
 };
 
+// The invariant lead-in and the part that actually carries the grammar,
+// e.g. 書く's negative splits into stem "書" + ending "かない".
+export type ConjugationPart = { stem: string; ending: string };
+export type ConjugationParts = Record<keyof Conjugation, ConjugationPart>;
+
 type KanaMap = Record<string, string>;
 
 const aGyou: KanaMap = {
@@ -105,24 +110,7 @@ function getStem(verb: string): string {
   return verb.slice(0, -1);
 }
 
-export function conjugate(verb: string, type: string): Conjugation {
-  let polite = "";
-  let negative = "";
-  let past = "";
-  let negativePast = "";
-  let pastPolite = "";
-  let negativePolite = "";
-  let negativePastPolite = "";
-  let te = "";
-  let potential = "";
-  let potentialPolite = "";
-  let passive = "";
-  let passivePolite = "";
-  let causative = "";
-  let imperative = "";
-  let volitional = "";
-  let volitionalPolite = "";
-
+export function conjugateParts(verb: string, type: string): ConjugationParts {
   const isKuru = type.includes("vk");
   const isSuru =
     !isKuru &&
@@ -137,60 +125,93 @@ export function conjugate(verb: string, type: string): Conjugation {
       ? "来る"
       : "";
 
+  const blank: ConjugationPart = { stem: "", ending: "" };
+  const parts: ConjugationParts = {
+    dictionary: { stem: verb, ending: "" },
+    negative: blank,
+    polite: blank,
+    negativePolite: blank,
+    past: blank,
+    negativePast: blank,
+    pastPolite: blank,
+    negativePastPolite: blank,
+    te: blank,
+    potential: blank,
+    potentialPolite: blank,
+    passive: blank,
+    passivePolite: blank,
+    causative: blank,
+    imperative: blank,
+    volitional: blank,
+    volitionalPolite: blank,
+  };
+
   if (isSuru) {
     const stem = suruSuffix ? verb.slice(0, -suruSuffix.length) : "";
-    negative = stem + "しない";
-    polite = stem + "します";
-    negativePolite = stem + "しません";
-    past = stem + "した";
-    negativePast = stem + "しなかった";
-    pastPolite = stem + "しました";
-    negativePastPolite = stem + "しませんでした";
-    te = stem + "して";
-    potential = stem + "できる";
-    potentialPolite = stem + "できます";
-    passive = stem + "される";
-    passivePolite = stem + "されます";
-    causative = stem + "させる";
-    imperative = stem + "しろ";
-    volitional = stem + "しよう";
-    volitionalPolite = stem + "しましょう";
+    const set = (key: keyof Conjugation, ending: string) => {
+      parts[key] = { stem, ending };
+    };
+    set("dictionary", verb.slice(stem.length));
+    set("negative", "しない");
+    set("polite", "します");
+    set("negativePolite", "しません");
+    set("past", "した");
+    set("negativePast", "しなかった");
+    set("pastPolite", "しました");
+    set("negativePastPolite", "しませんでした");
+    set("te", "して");
+    set("potential", "できる");
+    set("potentialPolite", "できます");
+    set("passive", "される");
+    set("passivePolite", "されます");
+    set("causative", "させる");
+    set("imperative", "しろ");
+    set("volitional", "しよう");
+    set("volitionalPolite", "しましょう");
   } else if (isKuru) {
     const stem = kuruSuffix ? verb.slice(0, -kuruSuffix.length) : "";
-    negative = stem + "こない";
-    polite = stem + "きます";
-    negativePolite = stem + "きません";
-    past = stem + "きた";
-    negativePast = stem + "こなかった";
-    pastPolite = stem + "きました";
-    negativePastPolite = stem + "きませんでした";
-    te = stem + "きて";
-    potential = stem + "こられる";
-    potentialPolite = stem + "こられます";
-    passive = stem + "こられる";
-    passivePolite = stem + "こられます";
-    causative = stem + "こさせる";
-    imperative = stem + "こい";
-    volitional = stem + "こよう";
-    volitionalPolite = stem + "きましょう";
+    const set = (key: keyof Conjugation, ending: string) => {
+      parts[key] = { stem, ending };
+    };
+    set("dictionary", verb.slice(stem.length));
+    set("negative", "こない");
+    set("polite", "きます");
+    set("negativePolite", "きません");
+    set("past", "きた");
+    set("negativePast", "こなかった");
+    set("pastPolite", "きました");
+    set("negativePastPolite", "きませんでした");
+    set("te", "きて");
+    set("potential", "こられる");
+    set("potentialPolite", "こられます");
+    set("passive", "こられる");
+    set("passivePolite", "こられます");
+    set("causative", "こさせる");
+    set("imperative", "こい");
+    set("volitional", "こよう");
+    set("volitionalPolite", "きましょう");
   } else if (type.includes("v1")) {
     const stem = verb.slice(0, -1);
-    negative = stem + "ない";
-    polite = stem + "ます";
-    negativePolite = stem + "ません";
-    past = stem + "た";
-    negativePast = stem + "なかった";
-    pastPolite = stem + "ました";
-    negativePastPolite = stem + "ませんでした";
-    te = stem + "て";
-    potential = stem + "られる";
-    potentialPolite = stem + "られます";
-    passive = stem + "られる";
-    passivePolite = stem + "られます";
-    causative = stem + "させる";
-    imperative = stem + "ろ";
-    volitional = stem + "よう";
-    volitionalPolite = stem + "ましょう";
+    const set = (key: keyof Conjugation, ending: string) => {
+      parts[key] = { stem, ending };
+    };
+    set("dictionary", verb.slice(stem.length));
+    set("negative", "ない");
+    set("polite", "ます");
+    set("negativePolite", "ません");
+    set("past", "た");
+    set("negativePast", "なかった");
+    set("pastPolite", "ました");
+    set("negativePastPolite", "ませんでした");
+    set("te", "て");
+    set("potential", "られる");
+    set("potentialPolite", "られます");
+    set("passive", "られる");
+    set("passivePolite", "られます");
+    set("causative", "させる");
+    set("imperative", "ろ");
+    set("volitional", "よう");
+    set("volitionalPolite", "ましょう");
   } else if (type.includes("v5")) {
     const lastChar = verb.slice(-1);
     const stem = getStem(verb);
@@ -200,61 +221,40 @@ export function conjugate(verb: string, type: string): Conjugation {
     const oRow = oGyou[lastChar];
 
     if (!aRow || !iRow || !eRow || !oRow) {
-      return {
-        dictionary: verb,
-        polite,
-        negative,
-        negativePolite,
-        past,
-        negativePast,
-        pastPolite,
-        negativePastPolite,
-        te,
-        potential,
-        potentialPolite,
-        passive,
-        passivePolite,
-        causative,
-        imperative,
-        volitional,
-        volitionalPolite,
-      };
+      return parts;
     }
 
-    negative = stem + aRow + "ない";
-    polite = stem + iRow + "ます";
-    negativePolite = stem + iRow + "ません";
-    past = isIkuException ? stem + "った" : stem + pastEndings[lastChar];
-    negativePast = stem + aRow + "なかった";
-    pastPolite = stem + iRow + "ました";
-    negativePastPolite = stem + iRow + "ませんでした";
-    te = isIkuException ? stem + "って" : stem + teEndings[lastChar];
-    potential = stem + eRow + "る";
-    potentialPolite = stem + eRow + "ます";
-    passive = stem + aRow + "れる";
-    passivePolite = stem + aRow + "れます";
-    causative = stem + aRow + "せる";
-    imperative = stem + eRow;
-    volitional = stem + oRow + "う";
-    volitionalPolite = stem + iRow + "ましょう";
+    const set = (key: keyof Conjugation, ending: string) => {
+      parts[key] = { stem, ending };
+    };
+    set("dictionary", lastChar);
+    set("negative", aRow + "ない");
+    set("polite", iRow + "ます");
+    set("negativePolite", iRow + "ません");
+    set("past", isIkuException ? "った" : pastEndings[lastChar]);
+    set("negativePast", aRow + "なかった");
+    set("pastPolite", iRow + "ました");
+    set("negativePastPolite", iRow + "ませんでした");
+    set("te", isIkuException ? "って" : teEndings[lastChar]);
+    set("potential", eRow + "る");
+    set("potentialPolite", eRow + "ます");
+    set("passive", aRow + "れる");
+    set("passivePolite", aRow + "れます");
+    set("causative", aRow + "せる");
+    set("imperative", eRow);
+    set("volitional", oRow + "う");
+    set("volitionalPolite", iRow + "ましょう");
   }
-  return {
-    dictionary: verb,
-    polite,
-    negative,
-    negativePolite,
-    past,
-    negativePast,
-    pastPolite,
-    negativePastPolite,
-    te,
-    potential,
-    potentialPolite,
-    passive,
-    passivePolite,
-    causative,
-    imperative,
-    volitional,
-    volitionalPolite,
-  };
+
+  return parts;
+}
+
+export function conjugate(verb: string, type: string): Conjugation {
+  const parts = conjugateParts(verb, type);
+  return Object.fromEntries(
+    (Object.keys(parts) as Array<keyof Conjugation>).map((key) => [
+      key,
+      parts[key].stem + parts[key].ending,
+    ]),
+  ) as Conjugation;
 }

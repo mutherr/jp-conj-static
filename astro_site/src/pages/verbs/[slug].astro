@@ -2,19 +2,24 @@
 import ConjugationChart from "../../components/ConjugationChart.astro";
 import verbs from "../../data/verbs.json";
 import BaseLayout from "../../layouts/Layout.astro";
-import { conjugate, type Conjugation } from "../../utils/conjugation";
+import { conjugateParts, type Conjugation } from "../../utils/conjugation";
 import { toRuby } from "../../utils/ruby";
-import { getVerbGroupLabel } from "../../utils/verbs";
+import { getVerbGroupBadge, getVerbGroupLabel } from "../../utils/verbs";
 
 const verb = Astro.props.verb;
-const termConjugation = conjugate(verb.term || verb.reading, verb.type);
-const readingConjugation = conjugate(verb.reading || verb.term, verb.type);
+const termParts = conjugateParts(verb.term || verb.reading, verb.type);
+const readingParts = conjugateParts(verb.reading || verb.term, verb.type);
 
+// Stem in plain ink, ending (the part conjugation actually changes) in accent —
+// same device as the homepage's vowel-row/ichidan demos, applied to every form.
 const conjugation = Object.fromEntries(
-  (Object.keys(termConjugation) as Array<keyof Conjugation>).map((key) => [
-    key,
-    toRuby(termConjugation[key], readingConjugation[key]),
-  ]),
+  (Object.keys(termParts) as Array<keyof Conjugation>).map((key) => {
+    const term = termParts[key];
+    const reading = readingParts[key];
+    const stem = toRuby(term.stem, reading.stem);
+    const ending = toRuby(term.ending, reading.ending);
+    return [key, ending ? `${stem}<mark class="suffix-mark">${ending}</mark>` : stem];
+  }),
 ) as Conjugation;
 
 export function getStaticPaths() {
@@ -26,6 +31,7 @@ export function getStaticPaths() {
 
 const displayTerm = verb.furigana || verb.term;
 const groupLabel = getVerbGroupLabel(verb.type);
+const groupBadge = getVerbGroupBadge(verb.type);
 ---
 
 <BaseLayout
@@ -58,7 +64,8 @@ const groupLabel = getVerbGroupLabel(verb.type);
         </h1>
         <div class="flex flex-wrap items-center gap-2 mt-3 mb-8">
           <span class="text-base-content/70">Reading: {verb.reading}</span>
-          <span class="badge badge-outline">{groupLabel}</span>
+          <span class={`badge ${groupBadge.badgeClass}`}>{groupBadge.kanji}</span>
+          <span class="text-base-content/70">{groupLabel}</span>
         </div>
 
         <ConjugationChart conjugations={conjugation} />
