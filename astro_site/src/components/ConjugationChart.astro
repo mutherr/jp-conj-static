@@ -6,6 +6,7 @@ type ChartEntry = {
   plain: string;
   polite?: string;
   note?: string;
+  isBase?: boolean;
 };
 
 const sections: Array<{ title: string; entries: ChartEntry[] }> = [
@@ -16,6 +17,7 @@ const sections: Array<{ title: string; entries: ChartEntry[] }> = [
         label: "Dictionary",
         plain: conjugations.dictionary,
         polite: conjugations.polite,
+        isBase: true,
       },
       {
         label: "Negative",
@@ -82,12 +84,13 @@ const sections: Array<{ title: string; entries: ChartEntry[] }> = [
   {
     sections.map((section) => (
       <section class="space-y-3">
-        <h2 class="text-sm uppercase tracking-wide text-base-content/60 font-semibold">
+        <h2 class="flex items-center gap-2 text-sm uppercase tracking-wide text-base-content/60 font-semibold">
+          <span class="section-mark" aria-hidden="true" />
           {section.title}
         </h2>
 
         <div class="hidden md:block overflow-x-auto rounded-box border border-base-300 bg-base-100">
-          <table class="table table-zebra w-full">
+          <table class="table w-full">
             <thead>
               <tr>
                 <th class="w-40">Form</th>
@@ -95,11 +98,18 @@ const sections: Array<{ title: string; entries: ChartEntry[] }> = [
                 <th>Polite</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-base-300">
               {section.entries.map((entry) => (
-                <tr>
+                <tr class={entry.isBase && "is-anchor-row"}>
                   <td>
-                    <div class="font-medium">{entry.label}</div>
+                    <div class="font-medium flex flex-wrap items-center gap-2">
+                      {entry.label}
+                      {entry.isBase && (
+                        <span class="badge badge-primary badge-xs whitespace-nowrap">
+                          Base form
+                        </span>
+                      )}
+                    </div>
                     {entry.note && (
                       <div class="text-xs text-base-content/60 mt-1">
                         {entry.note}
@@ -124,12 +134,20 @@ const sections: Array<{ title: string; entries: ChartEntry[] }> = [
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:hidden">
           {section.entries.map((entry) => (
-            <article class="card bg-base-100 border border-base-300 shadow-sm">
+            <article
+              class={`card bg-base-100 border border-base-300 shadow-sm ${entry.isBase ? "is-anchor-card" : ""}`}
+            >
               <div class="card-body p-4 gap-3">
                 <div class="flex items-start justify-between gap-3">
                   <h3 class="font-semibold">{entry.label}</h3>
-                  {entry.note && (
-                    <span class="badge badge-ghost badge-xs">note</span>
+                  {entry.isBase ? (
+                    <span class="badge badge-primary badge-xs whitespace-nowrap">
+                      Base form
+                    </span>
+                  ) : (
+                    entry.note && (
+                      <span class="badge badge-ghost badge-xs">note</span>
+                    )
                   )}
                 </div>
 

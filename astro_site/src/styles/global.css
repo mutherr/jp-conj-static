@@ -215,6 +215,30 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
   color: color-mix(in oklab, var(--color-base-content) 55%, transparent);
 }
 
+/* Small hanko-ink tick preceding each conjugation section's label. */
+.section-mark {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 1px;
+  background: var(--color-accent);
+}
+
+/* Dictionary form: the row/card every other conjugation is derived from,
+ * echoing the vowel-row "you are here" highlight on the homepage. */
+tr.is-anchor-row > td {
+  background: color-mix(in oklab, var(--color-primary) 10%, var(--color-base-100));
+}
+
+tr.is-anchor-row > td:first-child {
+  box-shadow: inset 3px 0 0 0 var(--color-primary);
+}
+
+.is-anchor-card {
+  background: color-mix(in oklab, var(--color-primary) 10%, var(--color-base-100));
+  border-color: var(--color-primary);
+}
+
 .row-mark,
 .suffix-mark {
   background: none;
