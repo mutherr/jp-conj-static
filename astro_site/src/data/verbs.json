@@ -1143,7 +1143,7 @@
     "term": "座す",
     "reading": "ざす",
     "furigana": "<ruby>座<rt>ざ</rt></ruby>す",
-    "type": "v5 vs",
+    "type": "v5",
     "tags": [
       "1",
       "v5s",
@@ -1156,7 +1156,7 @@
     "term": "坐す",
     "reading": "ざす",
     "furigana": "<ruby>坐<rt>ざ</rt></ruby>す",
-    "type": "v5 vs",
+    "type": "v5",
     "tags": [
       "1",
       "v5s",
@@ -5544,7 +5544,7 @@
     "term": "供す",
     "reading": "きょうす",
     "furigana": "<ruby>供<rt>きょう</rt></ruby>す",
-    "type": "v5 vs",
+    "type": "v5",
     "tags": [
       "1",
       "v5s",
@@ -5640,7 +5640,7 @@
     "term": "称す",
     "reading": "しょうす",
     "furigana": "<ruby>称<rt>しょう</rt></ruby>す",
-    "type": "v5 vs",
+    "type": "v5",
     "tags": [
       "1",
       "v5s",
@@ -5691,7 +5691,7 @@
     "term": "害す",
     "reading": "がいす",
     "furigana": "<ruby>害<rt>がい</rt></ruby>す",
-    "type": "v5 vs",
+    "type": "v5",
     "tags": [
       "1",
       "v5s",
@@ -5752,7 +5752,7 @@
     "term": "介す",
     "reading": "かいす",
     "furigana": "<ruby>介<rt>かい</rt></ruby>す",
-    "type": "v5 vs",
+    "type": "v5",
     "tags": [
       "1",
       "v5s",
@@ -5931,7 +5931,7 @@
     "term": "帰す",
     "reading": "きす",
     "furigana": "<ruby>帰<rt>き</rt></ruby>す",
-    "type": "v5 vs",
+    "type": "v5",
     "tags": [
       "1",
       "v5s",
@@ -33416,7 +33416,7 @@
     "term": "期す",
     "reading": "きす",
     "furigana": "<ruby>期<rt>き</rt></ruby>す",
-    "type": "v5 vs",
+    "type": "v5",
     "tags": [
       "1",
       "v5s",
@@ -52128,7 +52128,7 @@
     "term": "熟す",
     "reading": "じゅくす",
     "furigana": "<ruby>熟<rt>じゅく</rt></ruby>す",
-    "type": "v5 vs",
+    "type": "v5",
     "tags": [
       "1",
       "v5s",

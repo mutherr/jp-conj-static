@@ -161,12 +161,32 @@ def align(kanji: str, hiragana: str, log=False) -> str:
 
     return furigana
 
+# Rules can carry more than one inflection class (e.g. "v5 vs" for classical
+# す-ending verbs that JMDict-Yomitan tags as both godan and old-style suru).
+# We only implement modern v1/v5/vk/vs conjugation, and the classical suru
+# pattern only applies to words ending in する — these don't — so godan is
+# the one rule that actually produces correct forms. Resolve to a single
+# type here instead of leaving the ambiguity for callers to work around.
+_TYPE_PRIORITY = ("v1", "v5", "vk")
+
+
+def _resolve_type(raw_type: str) -> str:
+    tokens = raw_type.split()
+    if len(tokens) <= 1:
+        return raw_type
+    for priority in _TYPE_PRIORITY:
+        for token in tokens:
+            if token.startswith(priority):
+                return token
+    return tokens[0]
+
+
 class VerbEntry:
     def __init__(self, entry, id):
         self.id = id
         self.term = entry[0]
         self.reading = entry[1] if len(entry) > 1 else ""
-        self.type = entry[3]
+        self.type = _resolve_type(entry[3])
         self.tags = entry[2].split() if len(entry) > 2 else []
         self.furigana = ""
 
