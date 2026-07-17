@@ -3,6 +3,7 @@ import tsParser from "@typescript-eslint/parser";
 import astroPlugin from "eslint-plugin-astro";
 import astroParser from "astro-eslint-parser";
 import eslintConfigPrettier from "eslint-config-prettier";
+import globals from "globals";
 
 export default [
   {
@@ -15,8 +16,8 @@ export default [
   {
     languageOptions: {
       globals: {
-        node: true,
-        browser: true,
+        ...globals.node,
+        ...globals.browser,
       },
       parserOptions: {
         ecmaVersion: "latest",
