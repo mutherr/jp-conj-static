@@ -1,0 +1,31 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "overrides": [
+    {
+      "files": ["**/*.astro"],
+      "customSyntax": "postcss-html"
+    }
+  ],
+  "rules": {
+    "import-notation": "string",
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "tailwind",
+          "apply",
+          "layer",
+          "config",
+          "plugin",
+          "theme",
+          "source",
+          "utility",
+          "variant",
+          "custom-variant",
+          "reference"
+        ]
+      }
+    ],
+    "media-feature-range-notation": "prefix"
+  }
+}

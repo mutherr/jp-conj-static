@@ -21,12 +21,10 @@
 
   /* Strength of the washi texture behind all content — 0 hides it, 1 is full contrast. */
   --texture-opacity: 0.075;
-
   --color-base-100: light-dark(#f1f3ec, #1e2116);
   --color-base-200: light-dark(#e7eae0, #181a12);
   --color-base-300: light-dark(#d6dacb, #121409);
   --color-base-content: light-dark(#211d16, #e7eae0);
-
   --color-primary: light-dark(#1f3a5f, #7ca0ce);
   --color-primary-content: light-dark(#eef1ec, #0e1b2c);
   --color-secondary: light-dark(#45613b, #8aae7c);
@@ -35,7 +33,6 @@
   --color-accent-content: light-dark(#f7ebe6, #2e1006);
   --color-neutral: light-dark(#211d16, #3c4030);
   --color-neutral-content: light-dark(#eef1ec, #e7eae0);
-
   --washi-image: url("/textures/washi-light.webp");
   --washi-blend: multiply;
 }
@@ -46,6 +43,7 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
+
   --washi-image: url("/textures/washi-dark.webp");
   --washi-blend: screen;
 }
@@ -61,6 +59,7 @@ body {
   font-family:
     "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
   background-color: var(--color-base-200);
+
   /* z-index (even 0) forces body to own its stacking context, so the
    * z-index:-1 texture below is scoped as its child instead of escaping
    * to the root, where body's own background would paint over it. */
@@ -117,6 +116,7 @@ h3 {
     opacity: 0;
     transform: translateY(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -262,6 +262,20 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
     display: table-row;
   }
 
+  .conj-table .conj-cell {
+    display: table-cell;
+    padding: 0.75rem 1rem;
+    vertical-align: top;
+  }
+
+  .conj-table .conj-cell:first-child {
+    width: 10rem;
+  }
+
+  .conj-table .conj-cell[data-label]::before {
+    content: none;
+  }
+
   .conj-table .conj-head .conj-cell {
     padding: 0.75rem 1rem;
     font-size: 0.75rem;
@@ -291,20 +305,6 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
 
   .conj-table .conj-row.is-anchor-row .conj-cell:first-child {
     box-shadow: inset 3px 0 0 0 var(--color-primary);
-  }
-
-  .conj-table .conj-cell {
-    display: table-cell;
-    padding: 0.75rem 1rem;
-    vertical-align: top;
-  }
-
-  .conj-table .conj-cell:first-child {
-    width: 10rem;
-  }
-
-  .conj-table .conj-cell[data-label]::before {
-    content: none;
   }
 }
 

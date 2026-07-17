@@ -13,8 +13,10 @@
     "build": "astro build --base=/",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint . && npm run stylelint",
+    "lint:fix": "eslint . --fix && npm run stylelint:fix",
+    "stylelint": "stylelint \"src/**/*.{css,astro}\"",
+    "stylelint:fix": "stylelint \"src/**/*.{css,astro}\" --fix",
     "format": "prettier --write .",
     "test": "vitest run src",
     "test:e2e": "npm run build && playwright test"
