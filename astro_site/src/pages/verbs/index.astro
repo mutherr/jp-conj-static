@@ -116,6 +116,7 @@ import BaseLayout from "../../layouts/Layout.astro";
       row.className = "flex items-start justify-between gap-3";
 
       const term = document.createElement("span");
+      term.lang = "ja";
       term.className =
         "text-2xl font-bold group-hover:text-primary transition-colors possible-furigana";
       if (verb.furigana) {
@@ -131,6 +132,7 @@ import BaseLayout from "../../layouts/Layout.astro";
       row.append(term, badge);
 
       const reading = document.createElement("span");
+      reading.lang = "ja";
       reading.className = "text-sm text-base-content/60";
       reading.textContent = verb.reading;
 
