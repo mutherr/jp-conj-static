@@ -89,93 +89,60 @@ const sections: Array<{ title: string; entries: ChartEntry[] }> = [
           {section.title}
         </h2>
 
-        <div class="hidden md:block overflow-x-auto rounded-box border border-base-300 bg-base-100">
-          <table class="table w-full">
-            <thead>
-              <tr>
-                <th class="w-40">Form</th>
-                <th>Plain</th>
-                <th>Polite</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-base-300">
-              {section.entries.map((entry) => (
-                <tr class={entry.isBase && "is-anchor-row"}>
-                  <td>
-                    <div class="font-medium flex flex-wrap items-center gap-2">
-                      {entry.label}
-                      {entry.isBase && (
-                        <span class="badge badge-primary badge-xs whitespace-nowrap">
-                          Base form
-                        </span>
-                      )}
-                    </div>
-                    {entry.note && (
-                      <div class="text-xs text-base-content/60 mt-1">
-                        {entry.note}
-                      </div>
-                    )}
-                  </td>
-                  <td class="possible-furigana font-medium">
-                    <Fragment set:html={entry.plain} />
-                  </td>
-                  <td class="possible-furigana">
-                    {entry.polite ? (
-                      <Fragment set:html={entry.polite} />
-                    ) : (
-                      <span class="text-base-content/50">-</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <div class="conj-table" role="table">
+          <div class="conj-row conj-head" role="row">
+            <span class="conj-cell" role="columnheader">
+              Form
+            </span>
+            <span class="conj-cell" role="columnheader">
+              Plain
+            </span>
+            <span class="conj-cell" role="columnheader">
+              Polite
+            </span>
+          </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:hidden">
           {section.entries.map((entry) => (
-            <article
-              class={`card bg-base-100 border border-base-300 shadow-sm ${entry.isBase ? "is-anchor-card" : ""}`}
+            <div
+              class={`conj-row ${entry.isBase ? "is-anchor-row" : ""}`}
+              role="row"
             >
-              <div class="card-body p-4 gap-3">
-                <div class="flex items-start justify-between gap-3">
-                  <h3 class="font-semibold">{entry.label}</h3>
+              <div class="conj-cell" role="cell">
+                <div class="font-medium flex flex-wrap items-center gap-2">
+                  {entry.label}
                   {entry.isBase && (
                     <span class="badge badge-primary badge-xs whitespace-nowrap">
                       Base form
                     </span>
                   )}
                 </div>
-
-                <div class="space-y-2 text-sm">
-                  <div class="flex flex-col gap-1">
-                    <span class="text-base-content/60 uppercase tracking-wide text-xs">
-                      Plain
-                    </span>
-                    <span class="possible-furigana font-medium">
-                      <Fragment set:html={entry.plain} />
-                    </span>
-                  </div>
-
-                  <div class="flex flex-col gap-1">
-                    <span class="text-base-content/60 uppercase tracking-wide text-xs">
-                      Polite
-                    </span>
-                    <span class="possible-furigana">
-                      {entry.polite ? (
-                        <Fragment set:html={entry.polite} />
-                      ) : (
-                        <span class="text-base-content/50">-</span>
-                      )}
-                    </span>
-                  </div>
-                </div>
-
                 {entry.note && (
-                  <p class="text-xs text-base-content/60">{entry.note}</p>
+                  <div class="text-xs text-base-content/60 mt-1">
+                    {entry.note}
+                  </div>
                 )}
               </div>
-            </article>
+
+              <div
+                class="conj-cell possible-furigana font-medium"
+                role="cell"
+                data-label="Plain"
+              >
+                <Fragment set:html={entry.plain} />
+              </div>
+
+              <div
+                class="conj-cell possible-furigana"
+                role="cell"
+                data-label="Polite"
+              >
+                {entry.polite ? (
+                  <Fragment set:html={entry.polite} />
+                ) : (
+                  <span class="text-base-content/50">-</span>
+                )}
+              </div>
+            </div>
           ))}
         </div>
       </section>

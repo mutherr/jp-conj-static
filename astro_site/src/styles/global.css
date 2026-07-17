@@ -198,27 +198,114 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
   background: var(--color-accent);
 }
 
-/* Dictionary form: the row/card every other conjugation is derived from,
- * echoing the vowel-row "you are here" highlight on the homepage. */
-tr.is-anchor-row > td {
-  background: color-mix(
-    in oklab,
-    var(--color-primary) 10%,
-    var(--color-base-100)
-  );
+/*
+ * Conjugation chart: one row of markup (div grid with explicit table
+ * roles, since a native <table> loses its implicit row/cell semantics
+ * once its CSS display is changed for the mobile layout) that renders
+ * as a table on md+ and stacks into bordered cards below it, instead
+ * of maintaining two parallel DOM trees for desktop and mobile.
+ */
+.conj-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-tr.is-anchor-row > td:first-child {
-  box-shadow: inset 3px 0 0 0 var(--color-primary);
+.conj-table .conj-row.conj-head {
+  display: none;
 }
 
-.is-anchor-card {
+.conj-table .conj-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-base-300);
+  background: var(--color-base-100);
+}
+
+/* Dictionary form: the row/card every other conjugation is derived
+ * from, echoing the vowel-row "you are here" highlight on the homepage. */
+.conj-table .conj-row.is-anchor-row {
   background: color-mix(
     in oklab,
     var(--color-primary) 10%,
     var(--color-base-100)
   );
   border-color: var(--color-primary);
+}
+
+.conj-table .conj-cell[data-label]::before {
+  content: attr(data-label);
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: color-mix(in oklab, var(--color-base-content) 55%, transparent);
+  margin-bottom: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .conj-table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    gap: 0;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-base-300);
+    background: var(--color-base-100);
+    overflow: hidden;
+  }
+
+  .conj-table .conj-row.conj-head {
+    display: table-row;
+  }
+
+  .conj-table .conj-head .conj-cell {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-weight: 600;
+    color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+    border-bottom: 1px solid var(--color-base-300);
+  }
+
+  .conj-table .conj-row {
+    display: table-row;
+    gap: 0;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    background: none;
+  }
+
+  .conj-table .conj-row + .conj-row {
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  .conj-table .conj-head + .conj-row {
+    border-top: none;
+  }
+
+  .conj-table .conj-row.is-anchor-row .conj-cell:first-child {
+    box-shadow: inset 3px 0 0 0 var(--color-primary);
+  }
+
+  .conj-table .conj-cell {
+    display: table-cell;
+    padding: 0.75rem 1rem;
+    vertical-align: top;
+  }
+
+  .conj-table .conj-cell:first-child {
+    width: 10rem;
+  }
+
+  .conj-table .conj-cell[data-label]::before {
+    content: none;
+  }
 }
 
 .row-mark,
