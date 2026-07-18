@@ -81,6 +81,22 @@ const groupBadge = getVerbGroupBadge(verb.type);
           </span>
         </div>
 
+        {
+          verb.definitions.length > 0 && (
+            <div class="mb-8">
+              <h2 class="flex items-center gap-2 text-sm uppercase tracking-wide text-base-content/60 font-semibold mb-3">
+                <span class="section-mark" aria-hidden="true" />
+                Meaning
+              </h2>
+              <ol class="list-decimal list-inside space-y-1">
+                {verb.definitions.map((definition) => (
+                  <li>{definition}</li>
+                ))}
+              </ol>
+            </div>
+          )
+        }
+
         <ConjugationChart conjugations={conjugation} />
       </article>
     </main>
