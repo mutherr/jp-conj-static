@@ -79,19 +79,58 @@ import BaseLayout from "../../layouts/Layout.astro";
     </div>
   </section>
 
-  <script is:inline>
-    const searchInput = document.getElementById("verb-search");
-    const groupSelect = document.getElementById("verb-group");
-    const perPageSelect = document.getElementById("verbs-per-page");
-    const clearButton = document.getElementById("clear-filters");
-    const resultsText = document.getElementById("verbs-results");
-    const grid = document.getElementById("verbs-grid");
-    const prevButton = document.getElementById("page-prev");
-    const nextButton = document.getElementById("page-next");
-    const pageIndicator = document.getElementById("page-indicator");
+  <script>
+    type PagefindSearchResult = {
+      data: () => Promise<{ url: string; meta: Record<string, string> }>;
+    };
+
+    type PagefindModule = {
+      init: () => Promise<void>;
+      search: (
+        term: string | null,
+        options?: {
+          sort?: Record<string, "asc" | "desc">;
+          filters?: Record<string, string>;
+        },
+      ) => Promise<{ results: PagefindSearchResult[] }>;
+    };
+
+    type VerbGroup = "ichidan" | "godan" | "irregular";
+
+    type VerbSummary = {
+      term: string;
+      reading: string;
+      furigana: string;
+      groupLabel: string;
+      url: string;
+    };
+
+    const searchInput = document.getElementById(
+      "verb-search",
+    ) as HTMLInputElement;
+    const groupSelect = document.getElementById(
+      "verb-group",
+    ) as HTMLSelectElement;
+    const perPageSelect = document.getElementById(
+      "verbs-per-page",
+    ) as HTMLSelectElement;
+    const clearButton = document.getElementById(
+      "clear-filters",
+    ) as HTMLButtonElement;
+    const resultsText = document.getElementById("verbs-results") as HTMLElement;
+    const grid = document.getElementById("verbs-grid") as HTMLElement;
+    const prevButton = document.getElementById(
+      "page-prev",
+    ) as HTMLButtonElement;
+    const nextButton = document.getElementById(
+      "page-next",
+    ) as HTMLButtonElement;
+    const pageIndicator = document.getElementById(
+      "page-indicator",
+    ) as HTMLElement;
 
     const GROUP_VALUES = new Set(["all", "ichidan", "godan", "irregular"]);
-    const GROUP_LABELS = {
+    const GROUP_LABELS: Record<VerbGroup, string> = {
       ichidan: "Ichidan",
       godan: "Godan",
       irregular: "Irregular",
@@ -99,11 +138,11 @@ import BaseLayout from "../../layouts/Layout.astro";
     const PER_PAGE_VALUES = new Set(["48", "96", "192"]);
 
     let currentPage = 1;
-    let pagefind;
+    let pagefind: PagefindModule | undefined;
     let renderVersion = 0;
-    let inputTimer;
+    let inputTimer: number | undefined;
 
-    const createVerbCard = (verb) => {
+    const createVerbCard = (verb: VerbSummary) => {
       const card = document.createElement("a");
       card.href = verb.url;
       card.className =
@@ -144,14 +183,19 @@ import BaseLayout from "../../layouts/Layout.astro";
     const getResults = async () => {
       if (!pagefind) {
         const pagefindPath = "/pagefind/pagefind.js";
-        pagefind = await import(/* @vite-ignore */ pagefindPath);
+        pagefind = (await import(
+          /* @vite-ignore */ pagefindPath
+        )) as PagefindModule;
         await pagefind.init();
       }
 
       const group = groupSelect.value;
-      const options = { sort: { reading: "asc" } };
+      const options: {
+        sort: Record<string, "asc" | "desc">;
+        filters?: Record<string, string>;
+      } = { sort: { reading: "asc" } };
       if (group !== "all") {
-        options.filters = { group: GROUP_LABELS[group] };
+        options.filters = { group: GROUP_LABELS[group as VerbGroup] };
       }
 
       const query = searchInput.value.trim();
@@ -159,7 +203,9 @@ import BaseLayout from "../../layouts/Layout.astro";
       return response.results;
     };
 
-    const loadVerb = async (result) => {
+    const loadVerb = async (
+      result: PagefindSearchResult,
+    ): Promise<VerbSummary> => {
       const data = await result.data();
       return {
         term: data.meta.title || "Untitled",
