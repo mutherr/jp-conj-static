@@ -81,6 +81,7 @@ import BaseLayout from "../../layouts/Layout.astro";
 
   <script>
     type PagefindSearchResult = {
+      id: string;
       data: () => Promise<{ url: string; meta: Record<string, string> }>;
     };
 
@@ -141,6 +142,7 @@ import BaseLayout from "../../layouts/Layout.astro";
     let pagefind: PagefindModule | undefined;
     let renderVersion = 0;
     let inputTimer: number | undefined;
+    const verbCache = new Map<string, VerbSummary>();
 
     const createVerbCard = (verb: VerbSummary) => {
       const card = document.createElement("a");
@@ -206,14 +208,19 @@ import BaseLayout from "../../layouts/Layout.astro";
     const loadVerb = async (
       result: PagefindSearchResult,
     ): Promise<VerbSummary> => {
+      const cached = verbCache.get(result.id);
+      if (cached) return cached;
+
       const data = await result.data();
-      return {
+      const verb = {
         term: data.meta.title || "Untitled",
         reading: data.meta.reading || "",
         furigana: data.meta.furigana || "",
         groupLabel: data.meta.group || "Irregular",
         url: data.url,
       };
+      verbCache.set(result.id, verb);
+      return verb;
     };
 
     const applyStateFromUrl = () => {
