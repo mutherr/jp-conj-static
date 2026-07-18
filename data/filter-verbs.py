@@ -181,6 +181,27 @@ def _resolve_type(raw_type: str) -> str:
     return tokens[0]
 
 
+# JMdict-Yomitan glosses are structured-content trees rather than plain
+# strings, so the definitions for a headword's kept sense (see the "1" in
+# tags dedup above) live inside a single "glossary" node: either one {tag:
+# "li", content: str} or a list of them, nested inside the sense's one
+# top-level structured-content wrapper alongside sibling nodes we don't
+# want (references, antonyms, notes).
+def _extract_definitions(entry) -> list[str]:
+    if len(entry) <= 5 or not entry[5]:
+        return []
+
+    categories = entry[5][0]["content"]
+    categories = categories if isinstance(categories, list) else [categories]
+    for category in categories:
+        if category.get("data", {}).get("content") != "glossary":
+            continue
+        items = category["content"]
+        items = items if isinstance(items, list) else [items]
+        return [item["content"] for item in items]
+    return []
+
+
 class VerbEntry:
     def __init__(self, entry, id):
         self.id = id
@@ -188,6 +209,7 @@ class VerbEntry:
         self.reading = entry[1] if len(entry) > 1 else ""
         self.type = _resolve_type(entry[3])
         self.tags = entry[2].split() if len(entry) > 2 else []
+        self.definitions = _extract_definitions(entry)
         self.furigana = ""
 
     def generateFurigana(self):
@@ -206,6 +228,7 @@ class VerbEntry:
             "furigana": self.furigana,
             "type": self.type,
             "tags": self.tags,
+            "definitions": self.definitions,
         }
 
 def loadData():
@@ -234,7 +257,24 @@ if __name__ == "__main__":
     verbs = [d[:-1] for d in data if isVerb(d)]
     #deduplicate at headword level by taking first sense of each headword
     verbs = [v for v in verbs if "1" in v[2].split()]
-    verbs.append(["する", "する", "vs", "999999"])
+    # isVerb() excludes "vs" entirely (see project notes), so する has no
+    # kept entry of its own — hand-add it with real JMdict glosses so it
+    # isn't the one verb on the site missing a definition.
+    verbs.append([
+        "する", "する", "vs", "999999", 999800,
+        [{
+            "type": "structured-content",
+            "content": {
+                "tag": "ul",
+                "content": [
+                    {"tag": "li", "content": "to do"},
+                    {"tag": "li", "content": "to carry out"},
+                    {"tag": "li", "content": "to perform"},
+                ],
+                "data": {"content": "glossary"},
+            },
+        }],
+    ])
 
     print("Total entries:", len(data))
     print("Verbs:", len(verbs))
