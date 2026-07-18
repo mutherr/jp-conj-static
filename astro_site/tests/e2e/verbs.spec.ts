@@ -15,7 +15,7 @@ function textWithoutFurigana(locator: Locator): Promise<string | null> {
 test("searches and filters the production Pagefind index", async ({ page }) => {
   await page.goto("/verbs");
 
-  await expect(page.locator("#verbs-results")).toHaveText("4,415 matches");
+  await expect(page.locator("#verbs-results")).toHaveText("12,291 matches");
   await expect(page.locator("#verbs-grid > a")).toHaveCount(96);
 
   await page.locator("#verb-search").fill("食べる");

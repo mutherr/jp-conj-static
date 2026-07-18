@@ -109,6 +109,11 @@ def _normalize_ruby_ops(ops):
         # Heuristic for repeated-kana compounds where LCS may produce:
         # replace(A, x...y), equal(y), replace(B, "").
         # Re-split so y stays in equal and trailing reading moves to B.
+        # split_at == 0 (the whole reading chunk IS the repeated kana, e.g.
+        # replace("", "き"), equal("き"), replace("切", "")) is the same bug:
+        # B still needs a reading, so it must move even though "before" ends
+        # up empty — only requiring a non-empty `moved` still guarantees
+        # progress, since equal_chunk (and therefore moved) is never empty.
         if (
             index + 2 < len(normalized)
             and normalized[index + 1][0] == "equal"
@@ -118,11 +123,11 @@ def _normalize_ruby_ops(ops):
         ):
             equal_chunk = normalized[index + 1][1]
             split_at = replace_reading.find(equal_chunk)
-            if split_at > 0:
+            if split_at != -1:
                 before = replace_reading[:split_at]
                 after = replace_reading[split_at + len(equal_chunk):]
                 moved = after + equal_chunk
-                if before and moved:
+                if moved:
                     replace_reading = before
                     next_term = normalized[index + 2][1]
                     normalized[index + 2] = ("replace", next_term, moved)
@@ -255,8 +260,28 @@ if __name__ == "__main__":
     data = loadData()
 
     verbs = [d[:-1] for d in data if isVerb(d)]
-    #deduplicate at headword level by taking first sense of each headword
-    verbs = [v for v in verbs if "1" in v[2].split()]
+    # Deduplicate at headword level by taking the first sense of each
+    # headword. JMdict-Yomitan only prefixes a sense number when a headword
+    # has more than one sense — a single-sense entry (e.g. 致す) carries no
+    # digit at all, so "no digit" must be treated as sense 1, not filtered
+    # out. Group by (seq, term, reading) rather than just (term, reading):
+    # a seq is one dictionary entry, so this keeps true homographs that
+    # share spelling+reading (e.g. させる the causative verb vs. させる the
+    # auxiliary) as separate entries, while some kanji spellings only cover
+    # a subset of a seq's senses (e.g. 空ける only has senses 3-10, since
+    # senses 1-2 belong to the 開ける spelling of the same seq) — so within
+    # a group we take the lowest sense number actually present, not "1".
+    def _sense_rank(tags_str):
+        first_token = tags_str.split()[0] if tags_str.split() else ""
+        return int(first_token) if first_token.isdigit() else 1
+
+    first_sense_by_group = {}
+    for v in verbs:
+        key = (v[6], v[0], v[1])
+        rank = _sense_rank(v[2])
+        if key not in first_sense_by_group or rank < first_sense_by_group[key][0]:
+            first_sense_by_group[key] = (rank, v)
+    verbs = [v for _, v in first_sense_by_group.values()]
     # isVerb() excludes "vs" entirely (see project notes), so する has no
     # kept entry of its own — hand-add it with real JMdict glosses so it
     # isn't the one verb on the site missing a definition.
