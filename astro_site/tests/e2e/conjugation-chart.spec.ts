@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const VERB_PATH = "/verbs/たべる-877/";
+const VERB_PATH = "verbs/たべる-877/";
 
 test("renders the conjugation chart as a table with the dictionary form highlighted", async ({
   page,

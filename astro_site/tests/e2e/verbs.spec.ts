@@ -13,7 +13,7 @@ function textWithoutFurigana(locator: Locator): Promise<string | null> {
 }
 
 test("searches and filters the production Pagefind index", async ({ page }) => {
-  await page.goto("/verbs");
+  await page.goto("verbs");
 
   await expect(page.locator("#verbs-results")).toHaveText("12,291 matches");
   await expect(page.locator("#verbs-grid > a")).toHaveCount(96);
@@ -35,7 +35,7 @@ test("searches and filters the production Pagefind index", async ({ page }) => {
 });
 
 test("persists the furigana preference", async ({ page }) => {
-  await page.goto("/verbs");
+  await page.goto("verbs");
   const toggle = page.locator("#furigana-toggle");
 
   await expect(toggle).toHaveAttribute("aria-pressed", "true");
@@ -47,7 +47,7 @@ test("persists the furigana preference", async ({ page }) => {
 });
 
 test("redirects the legacy search route with its query", async ({ page }) => {
-  await page.goto("/search?q=書く");
+  await page.goto("search?q=書く");
 
   await expect(page).toHaveURL(/\/verbs\?q=%E6%9B%B8%E3%81%8F/);
   await expect
