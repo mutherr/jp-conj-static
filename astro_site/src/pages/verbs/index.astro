@@ -191,6 +191,41 @@ import BaseLayout from "../../layouts/Layout.astro";
       return card;
     };
 
+    const RANK_WINDOW = 200;
+
+    const matchTier = (verb: VerbSummary, query: string): number => {
+      if (verb.term === query || verb.reading === query) return 0;
+      if (verb.term.startsWith(query) || verb.reading.startsWith(query)) {
+        return 1;
+      }
+      if (verb.term.includes(query) || verb.reading.includes(query)) return 2;
+      return 3;
+    };
+
+    // Pagefind's own relevance order isn't guaranteed to put a whole-string
+    // match above a partial/definition-only one, so re-rank a bounded prefix
+    // (capped so broad queries matching thousands of verbs stay cheap) to
+    // guarantee exact/prefix matches surface first. Sort is stable, so ties
+    // keep Pagefind's original relevance order.
+    const rankResults = async (
+      results: PagefindSearchResult[],
+      query: string,
+    ): Promise<PagefindSearchResult[]> => {
+      if (!query) return results;
+
+      const windowSize = Math.min(results.length, RANK_WINDOW);
+      const prefix = results.slice(0, windowSize);
+      const rest = results.slice(windowSize);
+
+      const verbs = await Promise.all(prefix.map(loadVerb));
+      const ranked = prefix
+        .map((result, i) => ({ result, tier: matchTier(verbs[i], query) }))
+        .sort((a, b) => a.tier - b.tier)
+        .map((entry) => entry.result);
+
+      return [...ranked, ...rest];
+    };
+
     const getResults = async () => {
       if (!pagefind) {
         const pagefindPath = `${import.meta.env.BASE_URL}pagefind/pagefind.js`;
@@ -201,17 +236,20 @@ import BaseLayout from "../../layouts/Layout.astro";
       }
 
       const group = groupSelect.value;
+      const query = searchInput.value.trim();
       const options: {
-        sort: Record<string, "asc" | "desc">;
+        sort?: Record<string, "asc" | "desc">;
         filters?: Record<string, string>;
-      } = { sort: { reading: "asc" } };
+      } = {};
+      if (!query) {
+        options.sort = { reading: "asc" };
+      }
       if (group !== "all") {
         options.filters = { group: GROUP_LABELS[group as VerbGroup] };
       }
 
-      const query = searchInput.value.trim();
       const response = await pagefind.search(query || null, options);
-      return response.results;
+      return rankResults(response.results, query);
     };
 
     const loadVerb = async (
