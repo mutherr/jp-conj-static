@@ -13,6 +13,7 @@ export type Conjugation = {
   passive: string;
   passivePolite: string;
   causative: string;
+  causativePolite: string;
   imperative: string;
   volitional: string;
   volitionalPolite: string;
@@ -141,6 +142,7 @@ export function conjugateParts(verb: string, type: string): ConjugationParts {
     passive: blank,
     passivePolite: blank,
     causative: blank,
+    causativePolite: blank,
     imperative: blank,
     volitional: blank,
     volitionalPolite: blank,
@@ -165,6 +167,7 @@ export function conjugateParts(verb: string, type: string): ConjugationParts {
     set("passive", "される");
     set("passivePolite", "されます");
     set("causative", "させる");
+    set("causativePolite", "させます");
     set("imperative", "しろ");
     set("volitional", "しよう");
     set("volitionalPolite", "しましょう");
@@ -187,6 +190,7 @@ export function conjugateParts(verb: string, type: string): ConjugationParts {
     set("passive", "こられる");
     set("passivePolite", "こられます");
     set("causative", "こさせる");
+    set("causativePolite", "こさせます");
     set("imperative", "こい");
     set("volitional", "こよう");
     set("volitionalPolite", "きましょう");
@@ -209,6 +213,7 @@ export function conjugateParts(verb: string, type: string): ConjugationParts {
     set("passive", "られる");
     set("passivePolite", "られます");
     set("causative", "させる");
+    set("causativePolite", "させます");
     set("imperative", "ろ");
     set("volitional", "よう");
     set("volitionalPolite", "ましょう");
@@ -241,6 +246,7 @@ export function conjugateParts(verb: string, type: string): ConjugationParts {
     set("passive", aRow + "れる");
     set("passivePolite", aRow + "れます");
     set("causative", aRow + "せる");
+    set("causativePolite", aRow + "せます");
     set("imperative", eRow);
     set("volitional", oRow + "う");
     set("volitionalPolite", iRow + "ましょう");
