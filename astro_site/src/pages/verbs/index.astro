@@ -103,6 +103,7 @@ import BaseLayout from "../../layouts/Layout.astro";
       reading: string;
       furigana: string;
       groupLabel: string;
+      definitions: string;
       url: string;
     };
 
@@ -178,6 +179,14 @@ import BaseLayout from "../../layouts/Layout.astro";
       reading.textContent = verb.reading;
 
       body.append(row, reading);
+
+      if (verb.definitions) {
+        const definitions = document.createElement("span");
+        definitions.className = "text-sm text-base-content/70 line-clamp-2";
+        definitions.textContent = verb.definitions;
+        body.append(definitions);
+      }
+
       card.append(body);
       return card;
     };
@@ -217,6 +226,7 @@ import BaseLayout from "../../layouts/Layout.astro";
         reading: data.meta.reading || "",
         furigana: data.meta.furigana || "",
         groupLabel: data.meta.group || "Irregular",
+        definitions: data.meta.definitions || "",
         url: data.url,
       };
       verbCache.set(result.id, verb);
