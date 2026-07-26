@@ -175,7 +175,7 @@ import BaseLayout from "../../layouts/Layout.astro";
 
       const reading = document.createElement("span");
       reading.lang = "ja";
-      reading.className = "text-sm text-base-content/60";
+      reading.className = "text-sm text-base-content/70";
       reading.textContent = verb.reading;
 
       body.append(row, reading);
@@ -327,7 +327,7 @@ import BaseLayout from "../../layouts/Layout.astro";
         if (verbs.length === 0) {
           const empty = document.createElement("p");
           empty.className =
-            "col-span-full text-center text-base-content/60 py-10";
+            "col-span-full text-center text-base-content/70 py-10";
           empty.textContent = "No verbs match your filters.";
           grid.append(empty);
         } else {

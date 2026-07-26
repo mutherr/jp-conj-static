@@ -85,6 +85,15 @@ body::before {
   background-blend-mode: var(--washi-blend);
 }
 
+/* daisyUI's own .stat-title/.stat-desc ship at 60% opacity, which falls
+ * short of WCAG AA (4.5:1) against the washi cream base-100. Unlayered so
+ * it wins over daisyui's `@layer utilities` regardless of selector order,
+ * same technique as the theme tokens above. */
+.stat-title,
+.stat-desc {
+  color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
+}
+
 h1,
 h2,
 h3 {
@@ -144,8 +153,17 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
 }
 
 @media (max-width: 640px) {
+  /* A 2-column grid strands the 5th cell alone in the left column with a
+   * dangling gap on the right. Flex-wrap + centered justification lets an
+   * odd trailing item center itself instead. */
   .vowel-row {
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .vowel-cell {
+    flex: 0 1 calc(50% - 0.3rem);
   }
 }
 
@@ -173,7 +191,7 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
 .vowel-cell .kana-row {
   font-family: "Shippori Mincho", serif;
   font-size: 0.95rem;
-  color: color-mix(in oklab, var(--color-base-content) 45%, transparent);
+  color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
   letter-spacing: 0.05em;
 }
 
@@ -186,7 +204,7 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
   font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: color-mix(in oklab, var(--color-base-content) 55%, transparent);
+  color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
 }
 
 /* Small hanko-ink tick preceding each conjugation section's label. */
@@ -242,7 +260,7 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
   font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: color-mix(in oklab, var(--color-base-content) 55%, transparent);
+  color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
   margin-bottom: 0.25rem;
 }
 
@@ -282,7 +300,7 @@ html.hide-furigana .possible-furigana:not(:has(ruby)) {
     text-transform: uppercase;
     letter-spacing: 0.03em;
     font-weight: 600;
-    color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+    color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
     border-bottom: 1px solid var(--color-base-300);
   }
 

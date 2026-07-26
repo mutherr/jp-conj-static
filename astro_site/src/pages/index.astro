@@ -75,7 +75,7 @@ const ichidanForms = [
       One verb, five endings
     </h1>
     <p class="max-w-2xl text-base-content/70 mb-8">
-      Every godan verb's ending moves through the same five gojūon sounds.
+      Every godan verb's ending moves through the same five gojūon sounds.{" "}
       <span lang="ja">書く</span>'s stem ends in <span lang="ja">く</span>, so
       it cycles through the <span lang="ja">か・き・く・け・こ</span> row — and which
       one you land on decides the grammar.
@@ -99,7 +99,7 @@ const ichidanForms = [
   <!-- At a glance -->
   <section class="mb-16">
     <div
-      class="stats stats-horizontal shadow bg-base-100 w-full overflow-x-auto"
+      class="stats stats-vertical sm:stats-horizontal shadow bg-base-100 w-full"
     >
       <div class="stat place-items-center">
         <div class="stat-title">Total verbs</div>
@@ -114,7 +114,7 @@ const ichidanForms = [
         <div class="stat-value text-accent">{godanCount}</div>
       </div>
     </div>
-    <p class="text-xs text-base-content/50 mt-3 max-w-2xl">
+    <p class="text-xs text-base-content/70 mt-3 max-w-2xl">
       Sourced from the 2026/5/11 build of <a
         class="link"
         href="https://github.com/yomidevs/jmdict-yomitan">JMDict-Yomitan</a
@@ -135,7 +135,7 @@ const ichidanForms = [
             <span lang="ja" class="badge badge-secondary">一段</span>
             <h3 class="font-bold text-lg">Ichidan</h3>
           </div>
-          <p class="text-sm text-base-content/60">
+          <p class="text-sm text-base-content/70">
             Also called <strong>ru-verbs</strong>. The stem is fixed — only the
             part after it changes.
           </p>
@@ -144,14 +144,14 @@ const ichidanForms = [
               ichidanForms.map((entry) => (
                 <div class="flex items-center justify-between text-sm">
                   <span lang="ja" set:html={entry.form} />
-                  <span class="text-base-content/50 text-xs">
+                  <span class="text-base-content/70 text-xs">
                     {entry.label}
                   </span>
                 </div>
               ))
             }
           </div>
-          <div class="stem-legend text-base-content/60">
+          <div class="stem-legend text-base-content/70">
             <span class="swatch" style="background: var(--color-base-content);"
             ></span> stem <span
               class="swatch"
@@ -168,7 +168,7 @@ const ichidanForms = [
             <span lang="ja" class="badge badge-primary">五段</span>
             <h3 class="font-bold text-lg">Godan</h3>
           </div>
-          <p class="text-sm text-base-content/60">
+          <p class="text-sm text-base-content/70">
             Also called <strong>u-verbs</strong>. The final kana shifts across
             the five vowel-row sounds shown above.
           </p>
@@ -200,7 +200,7 @@ const ichidanForms = [
             <span lang="ja" class="badge badge-neutral">不規則</span>
             <h3 class="font-bold text-lg">Irregular</h3>
           </div>
-          <p class="text-sm text-base-content/60">
+          <p class="text-sm text-base-content/70">
             Only two true irregulars: <strong lang="ja">する</strong> and <strong
               lang="ja">くる</strong
             >. Must be memorised.
