@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout
@@ -11,13 +13,13 @@ import Layout from "../layouts/Layout.astro";
     <p class="text-base-content/70">
       Search and filters are now combined in the verb browser.
     </p>
-    <a id="verb-browser-link" href="/verbs" class="btn btn-primary"
+    <a id="verb-browser-link" href={`${base}verbs`} class="btn btn-primary"
       >Browse verbs</a
     >
   </section>
 
-  <script is:inline>
-    const target = `/verbs${window.location.search}`;
+  <script define:vars={{ base }} is:inline>
+    const target = `${base}verbs${window.location.search}`;
     const link = document.getElementById("verb-browser-link");
     if (link) link.setAttribute("href", target);
     window.location.replace(target);
