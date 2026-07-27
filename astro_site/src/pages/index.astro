@@ -143,18 +143,19 @@ const ichidanForms = [
             Also called <strong>ru-verbs</strong>. The stem is fixed — only the
             part after it changes.
           </p>
-          <div class="space-y-2 possible-furigana">
-            {
-              ichidanForms.map((entry) => (
-                <div class="flex items-center justify-between text-sm">
-                  <span lang="ja" set:html={entry.form} />
-                  <span class="text-base-content/70 text-xs">
-                    {entry.label}
-                  </span>
-                </div>
-              ))
-            }
-          </div>
+          <table class="table table-xs">
+            <thead><tr><th>Form</th><th lang="ja">食べる</th></tr></thead>
+            <tbody class="possible-furigana">
+              {
+                ichidanForms.map((entry) => (
+                  <tr>
+                    <td>{entry.label}</td>
+                    <td lang="ja" set:html={entry.form} />
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
           <div class="stem-legend text-base-content/70">
             <span class="swatch" style="background: var(--color-base-content);"
             ></span> stem <span
@@ -194,6 +195,13 @@ const ichidanForms = [
               >
             </tbody>
           </table>
+          <div class="stem-legend text-base-content/70">
+            <span class="swatch" style="background: var(--color-base-content);"
+            ></span> stem <span
+              class="swatch"
+              style="background: var(--color-accent); margin-left: 0.5rem;"
+            ></span> row kana
+          </div>
         </div>
       </div>
 
