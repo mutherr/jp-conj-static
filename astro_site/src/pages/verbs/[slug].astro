@@ -4,7 +4,12 @@ import verbs from "../../data/verbs.json";
 import BaseLayout from "../../layouts/Layout.astro";
 import { conjugateParts, type Conjugation } from "../../utils/conjugation";
 import { toRuby } from "../../utils/ruby";
-import { getVerbGroupBadge, getVerbGroupLabel } from "../../utils/verbs";
+import {
+  getTransitivity,
+  getTransitivityLabel,
+  getVerbGroupBadge,
+  getVerbGroupLabel,
+} from "../../utils/verbs";
 
 const verb = Astro.props.verb;
 const termParts = conjugateParts(verb.term || verb.reading, verb.type);
@@ -35,6 +40,7 @@ export function getStaticPaths() {
 const displayTerm = verb.furigana || verb.term;
 const groupLabel = getVerbGroupLabel(verb.type);
 const groupBadge = getVerbGroupBadge(verb.type);
+const transitivity = getTransitivity(verb.tags);
 ---
 
 <BaseLayout
@@ -89,6 +95,13 @@ const groupBadge = getVerbGroupBadge(verb.type);
             <span lang="ja">{groupBadge.kanji}</span>
             {groupLabel}
           </span>
+          {
+            transitivity && (
+              <span class="badge badge-outline">
+                {getTransitivityLabel(transitivity)}
+              </span>
+            )
+          }
         </div>
 
         {
