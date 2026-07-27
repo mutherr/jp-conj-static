@@ -11,6 +11,9 @@ describe("conjugate", () => {
     expect(result.potential).toBe("食べられる");
     expect(result.causative).toBe("食べさせる");
     expect(result.causativePolite).toBe("食べさせます");
+    expect(result.conditional).toBe("食べれば");
+    expect(result.tara).toBe("食べたら");
+    expect(result.tai).toBe("食べたい");
   });
 
   it("conjugates godan verbs", () => {
@@ -21,6 +24,9 @@ describe("conjugate", () => {
     expect(result.te).toBe("書いて");
     expect(result.causative).toBe("書かせる");
     expect(result.causativePolite).toBe("書かせます");
+    expect(result.conditional).toBe("書けば");
+    expect(result.tara).toBe("書いたら");
+    expect(result.tai).toBe("書きたい");
   });
 
   it("handles the iku past and te-form exception", () => {
@@ -28,6 +34,7 @@ describe("conjugate", () => {
 
     expect(result.past).toBe("行った");
     expect(result.te).toBe("行って");
+    expect(result.tara).toBe("行ったら");
   });
 
   it("conjugates kuru", () => {
@@ -38,6 +45,9 @@ describe("conjugate", () => {
     expect(result.imperative).toBe("こい");
     expect(result.causative).toBe("こさせる");
     expect(result.causativePolite).toBe("こさせます");
+    expect(result.conditional).toBe("くれば");
+    expect(result.tara).toBe("きたら");
+    expect(result.tai).toBe("きたい");
   });
 
   it("preserves the stem of suru compounds", () => {
@@ -48,6 +58,9 @@ describe("conjugate", () => {
     expect(result.volitionalPolite).toBe("勉強しましょう");
     expect(result.causative).toBe("勉強させる");
     expect(result.causativePolite).toBe("勉強させます");
+    expect(result.conditional).toBe("勉強すれば");
+    expect(result.tara).toBe("勉強したら");
+    expect(result.tai).toBe("勉強したい");
   });
 
   it("conjugates classical su-verbs tagged as both godan and suru", () => {
@@ -56,5 +69,8 @@ describe("conjugate", () => {
     expect(result.negative).toBe("供さない");
     expect(result.past).toBe("供した");
     expect(result.te).toBe("供して");
+    expect(result.conditional).toBe("供せば");
+    expect(result.tara).toBe("供したら");
+    expect(result.tai).toBe("供したい");
   });
 });

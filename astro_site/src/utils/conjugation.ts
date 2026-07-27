@@ -17,6 +17,9 @@ export type Conjugation = {
   imperative: string;
   volitional: string;
   volitionalPolite: string;
+  conditional: string;
+  tara: string;
+  tai: string;
 };
 
 // The invariant lead-in and the part that actually carries the grammar,
@@ -146,6 +149,9 @@ export function conjugateParts(verb: string, type: string): ConjugationParts {
     imperative: blank,
     volitional: blank,
     volitionalPolite: blank,
+    conditional: blank,
+    tara: blank,
+    tai: blank,
   };
 
   if (isSuru) {
@@ -171,6 +177,8 @@ export function conjugateParts(verb: string, type: string): ConjugationParts {
     set("imperative", "しろ");
     set("volitional", "しよう");
     set("volitionalPolite", "しましょう");
+    set("conditional", "すれば");
+    set("tai", "したい");
   } else if (isKuru) {
     const stem = kuruSuffix ? verb.slice(0, -kuruSuffix.length) : "";
     const set = (key: keyof Conjugation, ending: string) => {
@@ -194,6 +202,8 @@ export function conjugateParts(verb: string, type: string): ConjugationParts {
     set("imperative", "こい");
     set("volitional", "こよう");
     set("volitionalPolite", "きましょう");
+    set("conditional", "くれば");
+    set("tai", "きたい");
   } else if (type.includes("v1")) {
     const stem = verb.slice(0, -1);
     const set = (key: keyof Conjugation, ending: string) => {
@@ -217,6 +227,8 @@ export function conjugateParts(verb: string, type: string): ConjugationParts {
     set("imperative", "ろ");
     set("volitional", "よう");
     set("volitionalPolite", "ましょう");
+    set("conditional", "れば");
+    set("tai", "たい");
   } else if (type.includes("v5")) {
     const lastChar = verb.slice(-1);
     const stem = getStem(verb);
@@ -250,6 +262,15 @@ export function conjugateParts(verb: string, type: string): ConjugationParts {
     set("imperative", eRow);
     set("volitional", oRow + "う");
     set("volitionalPolite", iRow + "ましょう");
+    set("conditional", eRow + "ば");
+    set("tai", iRow + "たい");
+  }
+
+  // The tara-form is always the past form plus ら, so it can be derived
+  // generically once the past form is known instead of duplicating the
+  // past-tense exceptions (いく, す/ず endings, etc.) per verb type.
+  if (parts.past.ending) {
+    parts.tara = { stem: parts.past.stem, ending: parts.past.ending + "ら" };
   }
 
   return parts;
