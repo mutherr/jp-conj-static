@@ -3,6 +3,18 @@ import os
 import re
 
 DICT_PATH = "all/"
+
+
+def escape_html(value: str) -> str:
+    return (
+        value.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("'", "&#39;")
+    )
+
+
 KANA_RE = re.compile(r'^[\u3040-\u309f\u30a0-\u30ffー]+$')
 
 
@@ -153,10 +165,10 @@ def align(kanji: str, hiragana: str, log=False) -> str:
                 print(f"replace | {op[1]!r:10} → {op[2]!r}")
 
         if kind == "equal":
-            furigana += op[1]
+            furigana += escape_html(op[1])
         elif kind == "replace":
-            replace_term = op[1]
-            replace_reading = op[2]
+            replace_term = escape_html(op[1])
+            replace_reading = escape_html(op[2])
             if replace_term and replace_reading:
                 furigana += f"<ruby>{replace_term}<rt>{replace_reading}</rt></ruby>"
             elif replace_term:
