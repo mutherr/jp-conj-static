@@ -79,6 +79,27 @@ up with:
 node -e "console.log(require('./src/data/verbs.json').find(v => v.term === '食べる'))"
 ```
 
+## Keeping screenshot cost down
+
+Screenshots are the expensive part of this skill — each one you `Read` back
+becomes an image block that stays in context and gets re-sent on every
+subsequent turn for the rest of the session, not paid once. Sessions that use
+this skill heavily have racked up 60-90+ screenshots. Be deliberate:
+
+- Only capture the theme/viewport variant(s) actually affected by the
+  change. Don't reflexively shoot the full light/dark × desktop/mobile
+  matrix — do that only when the change plausibly touches all of them
+  (e.g. a `global.css` token change), not for a single-component tweak.
+- Skip `--full-page` unless you specifically need below-the-fold content;
+  the default viewport crop is smaller and cheaper.
+- Verify once after a batch of edits, not after every individual tweak.
+- Don't re-`Read` a screenshot you already inspected earlier in the same
+  session if nothing visual has changed since — trust the diff.
+- If a verification pass needs several variants, consider whether you need
+  to visually inspect all of them or just confirm they rendered (file
+  exists, non-trivial size) — only `Read` the ones you're actually unsure
+  about.
+
 ## Run (human path)
 
 ```bash
