@@ -82,6 +82,10 @@ body::before {
   background-color: var(--color-base-200);
   background-image: var(--washi-image);
   background-repeat: repeat;
+  /* Source images are downsampled from their original 1000x706 for a
+   * faster LCP; pin the tile back to that size so the repeat cadence
+   * doesn't change. */
+  background-size: 1000px 706px;
   background-blend-mode: var(--washi-blend);
 }
 
